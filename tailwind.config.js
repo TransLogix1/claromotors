@@ -15,6 +15,10 @@ export default {
         'btn-primary-text': '#0F1012',
         'btn-primary-hover': '#E0E2E5',
         'btn-secondary': '#1F2226',
+        accent: '#C9A469',
+        'accent-hover': '#DCC08C',
+        'accent-dark': '#8C6F3F',
+        'accent-muted': 'rgba(201, 164, 105, 0.12)',
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'serif'],
@@ -27,6 +31,9 @@ export default {
       },
       maxWidth: {
         '8xl': '88rem',
+      },
+      boxShadow: {
+        accent: '0 8px 30px -8px rgba(201, 164, 105, 0.35)',
       },
     },
   },

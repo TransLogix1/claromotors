@@ -38,13 +38,15 @@
     font-size: 0.875rem;
     letter-spacing: 0.02em;
     border-radius: 4px;
-    transition: background-color 0.2s ease, transform 0.15s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.3s ease;
     cursor: pointer;
     border: none;
   }
 
   .btn-primary:hover {
     background-color: #E0E2E5;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -8px rgba(201, 164, 105, 0.4);
   }
 
   .btn-primary:active {
@@ -64,13 +66,14 @@
     letter-spacing: 0.02em;
     border-radius: 4px;
     border: 1px solid #2B2F35;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     cursor: pointer;
   }
 
   .btn-secondary:hover {
     background-color: #2B2F35;
-    border-color: #3a3f47;
+    border-color: #C9A469;
+    transform: translateY(-2px);
   }
 
   .btn-secondary:active {
@@ -87,12 +90,13 @@
     font-family: 'Inter', sans-serif;
     font-size: 0.9375rem;
     font-weight: 400;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
   }
 
   .input-field:focus {
-    border-color: #9AA0A6;
+    border-color: #C9A469;
+    box-shadow: 0 0 0 3px rgba(201, 164, 105, 0.15);
   }
 
   .input-field::placeholder {
@@ -103,6 +107,13 @@
     background-color: #16181B;
     border: 1px solid #2B2F35;
     border-radius: 8px;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .card-interactive:hover {
+    transform: translateY(-6px);
+    border-color: rgba(201, 164, 105, 0.45);
+    box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.5), 0 8px 24px -8px rgba(201, 164, 105, 0.18);
   }
 
   .section-padding {
@@ -135,20 +146,21 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 20px;
   height: 20px;
-  background-color: #FFFFFF;
+  background-color: #C9A469;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(201, 164, 105, 0.2);
 }
 
 input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background-color: #FFFFFF;
+  background-color: #C9A469;
   border-radius: 50%;
   cursor: pointer;
   border: none;
@@ -181,7 +193,7 @@ input[type="number"] {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3f47;
+  background: #C9A469;
 }
 
 /* Modal animation */
@@ -203,7 +215,7 @@ input[type="number"] {
   animation: modalSlideUp 0.3s ease forwards;
 }
 
-/* Fade-in on scroll */
+/* Entrance animation (page load, e.g. hero) */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -212,6 +224,31 @@ input[type="number"] {
 .fade-in-up {
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Scroll-triggered reveal (toggled via IntersectionObserver in useScrollReveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .fade-in-up {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* Segmented control button */
@@ -230,7 +267,7 @@ input[type="number"] {
 
 .seg-btn:hover {
   color: #F0F2F5;
-  border-color: #3a3f47;
+  border-color: #C9A469;
 }
 
 .seg-btn.active {

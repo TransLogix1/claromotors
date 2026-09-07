@@ -25,7 +25,7 @@ export default function WhyClaro() {
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
         {/* SI, CLARO */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
-          <div>
+          <div className="reveal">
             <h2 className="text-3xl md:text-5xl text-white mb-6">
               Dlaczego my?
             </h2>
@@ -35,7 +35,7 @@ export default function WhyClaro() {
             <div className="space-y-4">
               {siClaroPoints.map((point) => (
                 <div key={point} className="flex items-start gap-3">
-                  <CheckCircle2 size={22} className="text-white flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 size={22} className="text-accent flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="text-text-light">{point}</span>
                     <span className="text-white font-medium block mt-0.5">— SI, CLARO</span>
@@ -45,7 +45,7 @@ export default function WhyClaro() {
             </div>
           </div>
 
-          <div className="card p-8 md:p-12">
+          <div className="card reveal p-8 md:p-12" style={{ transitionDelay: '120ms' }}>
             <p className="text-text-muted leading-relaxed mb-6 font-light">
               Claro Motors to przede wszystkim ludzie; indywidualni doradcy, którzy na pierwszym miejscu stawiają Ciebie — naszego klienta; którzy znają ten moment, gdy przychodzi czas na zmianę samochodu, wyboru najlepszej formy finansowania, znalezienia najlepszej oferty ubezpieczenia czy pomocy w sprzedaży obecnego samochodu; którzy będą służyć pomocą od początku do końca — od wyboru samochodu, aż po odebranie z salonu.
             </p>
@@ -69,7 +69,7 @@ export default function WhyClaro() {
                 key={option}
                 className="flex items-center gap-3 bg-input border border-border rounded p-4"
               >
-                <CheckCircle2 size={18} className="text-white flex-shrink-0" />
+                <CheckCircle2 size={18} className="text-accent flex-shrink-0" />
                 <span className="text-sm text-text-light">{option}</span>
               </div>
             ))}

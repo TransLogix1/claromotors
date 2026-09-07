@@ -39,7 +39,7 @@ export default function Fleet() {
   return (
     <section id="flota" className="section-padding">
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
-        <div className="mb-14 md:mb-20">
+        <div className="mb-14 md:mb-20 reveal">
           <h2 className="text-3xl md:text-5xl text-white mb-4">
             Flota Pojazdów
           </h2>
@@ -49,8 +49,12 @@ export default function Fleet() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="card overflow-hidden flex flex-col group">
+          {vehicles.map((vehicle, index) => (
+            <div
+              key={vehicle.id}
+              className="card card-interactive reveal overflow-hidden flex flex-col group"
+              style={{ transitionDelay: `${(index % 3) * 80}ms` }}
+            >
               {/* Image */}
               <div className="relative h-52 bg-input overflow-hidden">
                 <img
@@ -92,7 +96,7 @@ export default function Fleet() {
 
                 <div className="flex items-center justify-between pt-4 border-t border-border mb-5">
                   <span className="text-sm text-text-muted">Cena wyjściowa netto</span>
-                  <span className="text-lg text-white font-semibold tabular-nums">
+                  <span className="text-lg text-accent font-semibold tabular-nums">
                     {formatPLN(vehicle.price)}
                   </span>
                 </div>

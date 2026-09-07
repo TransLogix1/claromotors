@@ -45,10 +45,10 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md ${
         scrolled
-          ? 'bg-canvas border-b border-border'
-          : 'bg-canvas/95 border-b border-border/50'
+          ? 'bg-canvas/95 border-b border-border shadow-[0_4px_24px_-8px_rgba(0,0,0,0.4)]'
+          : 'bg-canvas/80 border-b border-border/50'
       }`}
     >
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
@@ -57,9 +57,9 @@ export default function Header() {
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
-            className="font-serif text-2xl font-bold tracking-[0.2em] text-white whitespace-nowrap"
+            className="font-serif text-2xl font-bold tracking-[0.2em] text-white whitespace-nowrap group"
           >
-            CLARO MOTORS
+            CLARO<span className="text-accent transition-colors group-hover:text-accent-hover"> MOTORS</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -68,7 +68,7 @@ export default function Header() {
               <button
                 key={link.label}
                 onClick={() => handleNavClick(link.to, link.hash)}
-                className="text-sm font-normal text-text-muted hover:text-white transition-colors duration-200"
+                className="text-sm font-normal text-text-muted hover:text-accent transition-colors duration-200"
               >
                 {link.label}
               </button>
@@ -79,9 +79,9 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-3">
             <a
               href="tel:517195097"
-              className="flex items-center gap-3 px-4 py-2.5 bg-btn-secondary border border-border rounded hover:bg-border transition-colors duration-200"
+              className="flex items-center gap-3 px-4 py-2.5 bg-btn-secondary border border-border rounded hover:border-accent hover:bg-border transition-all duration-200"
             >
-              <Phone size={18} className="text-white" />
+              <Phone size={18} className="text-accent" />
               <div className="flex flex-col leading-tight">
                 <span className="text-sm font-semibold text-white tracking-wide">517 195 097</span>
                 <span className="text-[11px] text-text-muted">Wojciech — Bezpośredni kontakt</span>
@@ -107,7 +107,7 @@ export default function Header() {
             <button
               key={link.label}
               onClick={() => handleNavClick(link.to, link.hash)}
-              className="block text-base text-text-muted hover:text-white transition-colors text-left w-full"
+              className="block text-base text-text-muted hover:text-accent transition-colors text-left w-full"
             >
               {link.label}
             </button>

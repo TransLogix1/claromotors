@@ -63,7 +63,7 @@ export default function Hero() {
                   <button
                     key={item.slug}
                     onClick={() => navigate(`/oferta/${item.slug}`)}
-                    className="text-sm text-text-muted hover:text-white border border-border rounded px-3 py-1.5 transition-colors hover:border-[#3a3f47]"
+                    className="text-sm text-text-muted hover:text-accent border border-border rounded px-3 py-1.5 transition-colors hover:border-accent/50"
                   >
                     {item.label}
                   </button>
@@ -74,7 +74,7 @@ export default function Hero() {
 
           {/* Right: Featured Model Card */}
           <div className="fade-in-up" style={{ animationDelay: '0.15s' }}>
-            <div className="card overflow-hidden">
+            <div className="card card-interactive overflow-hidden">
               <div className="relative h-64 md:h-80 bg-input">
                 <img
                   src="https://images.pexels.com/photos/94272/sports-car-pkw-auto-vehicle-94272.jpeg?auto=compress&cs=tinysrgb&w=1200"
@@ -84,7 +84,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-t from-container via-transparent to-transparent" />
               </div>
               <div className="p-6 md:p-8">
-                <p className="text-xs text-text-muted uppercase tracking-[0.15em] mb-2">
+                <p className="text-xs text-accent uppercase tracking-[0.15em] mb-2 font-medium">
                   Flagowy Model Tygodnia
                 </p>
                 <h3 className="text-2xl md:text-3xl text-white mb-6">
@@ -92,17 +92,17 @@ export default function Hero() {
                 </h3>
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   <div className="flex flex-col gap-1.5">
-                    <Gauge size={18} className="text-text-muted" />
+                    <Gauge size={18} className="text-accent" />
                     <span className="text-xs text-text-muted">Moc</span>
                     <span className="text-sm text-white font-medium">480 KM</span>
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <Zap size={18} className="text-text-muted" />
+                    <Zap size={18} className="text-accent" />
                     <span className="text-xs text-text-muted">Silnik</span>
                     <span className="text-sm text-white font-medium">V8 4.0T</span>
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <Settings size={18} className="text-text-muted" />
+                    <Settings size={18} className="text-accent" />
                     <span className="text-xs text-text-muted">Rata od</span>
                     <span className="text-sm text-white font-medium">4 980 zł</span>
                   </div>

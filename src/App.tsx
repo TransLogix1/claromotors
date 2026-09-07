@@ -12,6 +12,7 @@ import About from '@/components/About';
 import Footer from '@/components/Footer';
 import OfertaPage from '@/components/OfertaPage';
 import ServiceDetail from '@/components/ServiceDetail';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 function HomePage() {
   const [calculatorData, setCalculatorData] = useState<{
@@ -21,6 +22,8 @@ function HomePage() {
   } | null>(null);
 
   const contactRef = useRef<HTMLDivElement>(null);
+
+  useScrollReveal([]);
 
   const handleApplyConditions = (rata: number, wplata: number, wykup: number) => {
     setCalculatorData({ rata, wplata, wykup });
