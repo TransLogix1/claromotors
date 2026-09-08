@@ -41,7 +41,14 @@ export interface TranslationShape {
   offerHome: { title: string; subtitle: string; checkDetails: string };
   offerPage: { title: string; subtitle: string; readMore: string };
   serviceDetail: { back: string; contactCta: string };
-  about: { title: string; p1: string; p2: string; p3: string; founderName: string; founderRole: string; goToContact: string };
+  about: {
+    title: string; p1: string; p2: string; p3: string; founderName: string; founderRole: string; goToContact: string;
+    stats: { value: string; label: string }[];
+    howTitle: string; howSubtitle: string;
+    steps: { title: string; description: string }[];
+    whyTitle: string; whySubtitle: string;
+    reasons: { title: string; description: string }[];
+  };
   contact: {
     title: string; subtitle: string; fullName: string; email: string; phone: string; nip: string;
     message: string; messagePlaceholder: string; consent: string; send: string; sentTitle: string;
@@ -253,10 +260,52 @@ export const translations: Record<Lang, TranslationShape> = {
       title: 'O nas',
       p1: 'Claro Motors to firma, która powstała w oparciu o wieloletnie doświadczenie pracowników w branży finansowej oraz motoryzacyjnej. Doradcy Claro Motors przez lata zdobywali wiedzę w salonach samochodowych różnych marek oraz instytucjach bankowych.',
       p2: 'Koncepcja firmy doradczej powstała w 2018 roku, wychodząc naprzeciw oczekiwaniom i potrzebom klientów. Duże zainteresowanie oraz sprzedaż 120 samochodów w ostatnim kwartale 2018 roku pozwoliły na szybki rozwój firmy oraz zbudowaniu zaufania i ścisłej relacji z klientami, którzy zlecając nam obsługę w zakresie zakupu samochodu i wyboru finansowania zdecydowali się również na stałą współpracę w zakresie doradztwa ubezpieczeniowego.',
-      p3: 'Wiemy, że indywidualne podejście i stała relacja budowana z Klientami, to podstawa naszego rozwoju oraz wieloletniej współpracy opartej na zaufaniu.',
+      p3: 'Wiemy, że indywidualne podejście i stała relacja budowana z Klientami, to podstawa naszego rozwoju oraz wieloletniej współpracy opartej na zaufaniu. Nie jesteśmy salonem jednej marki — łączymy oferty dealerów, banków i firm leasingowych, a potem pomagamy przełożyć je na jedną, konkretną decyzję: jaki samochód, jaka rata i jaka forma finansowania faktycznie pasuje do tego, jak z auta korzystasz.',
       founderName: 'Wojciech',
       founderRole: 'Założyciel',
       goToContact: 'Skontaktuj się z nami',
+      stats: [
+        { value: '8 lat', label: 'doświadczenia na rynku od 2018 roku' },
+        { value: '1500+', label: 'sfinansowanych i wynegocjowanych samochodów' },
+        { value: '18', label: 'instytucji finansowych i towarzystw ubezpieczeniowych' },
+        { value: '40+', label: 'dostępnych marek samochodów' },
+      ],
+      howTitle: 'Jak działamy?',
+      howSubtitle: 'Prosta ścieżka od pierwszej rozmowy do odbioru auta — bez przepisywania tych samych danych w kilku miejscach i bez presji sprzedażowej.',
+      steps: [
+        {
+          title: 'Poznajemy Twoją sytuację',
+          description: 'Rozmawiamy o tym, jak faktycznie korzystasz z auta — firmowo, prywatnie, sezonowo czy na stałe — zanim zaproponujemy jakikolwiek wariant.',
+        },
+        {
+          title: 'Porównujemy oferty za Ciebie',
+          description: 'Zestawiamy leasing, wynajem długoterminowy i kredyt od kilku dealerów i instytucji jednocześnie, tak żebyś nie musiał samodzielnie dzwonić do każdej z osobna.',
+        },
+        {
+          title: 'Prowadzimy do odbioru auta',
+          description: 'Wniosek, decyzja finansująca, dokumenty, ubezpieczenie i odbiór samochodu — całość prowadzi jeden opiekun po stronie Claro Motors.',
+        },
+      ],
+      whyTitle: 'Dlaczego Claro Motors?',
+      whySubtitle: 'Dajemy Ci porównanie ofert, ale nie chowamy się za tabelą — najważniejsze warunki zawsze omawiasz bezpośrednio z doradcą, zanim podejmiesz decyzję.',
+      reasons: [
+        {
+          title: 'Doradztwo zamiast presji sprzedaży',
+          description: 'Nie wciskamy jednej formy finansowania. Pokazujemy różnice między leasingiem, wynajmem i kredytem, a decyzję opieramy na Twoim budżecie i sposobie użytkowania auta.',
+        },
+        {
+          title: 'Jeden opiekun od początku do końca',
+          description: 'Nie trafiasz do kolejnej osoby na każdym etapie. Ten sam doradca prowadzi Cię od wyboru samochodu, przez formalności, aż po odbiór z salonu.',
+        },
+        {
+          title: 'Oferty z wielu źródeł naraz',
+          description: 'Łączymy oferty dealerów, banków i firm leasingowych, żeby szybciej porównać raty, dostępność i warunki umowy bez ręcznego zbierania kalkulacji.',
+        },
+        {
+          title: 'Bezpieczniejsze decyzje finansowe',
+          description: 'Tłumaczymy, co realnie wpływa na wysokość raty i jakie kompromisy niesie dana umowa — zanim złożysz wniosek, a nie po jego podpisaniu.',
+        },
+      ],
     },
     contact: {
       title: 'Formularz kontaktowy',
@@ -532,10 +581,52 @@ export const translations: Record<Lang, TranslationShape> = {
       title: 'About Us',
       p1: 'Claro Motors is a company built on years of employee experience in the finance and automotive industries. Claro Motors advisors spent years gaining knowledge at dealerships of various brands and at banking institutions.',
       p2: 'The concept of an advisory company was created in 2018, in response to customer expectations and needs. Strong interest and the sale of 120 cars in the last quarter of 2018 allowed the company to grow quickly and to build trust and close relationships with clients, who, after entrusting us with car purchase and financing selection, also decided to continue working with us on insurance advisory.',
-      p3: 'We know that an individual approach and a lasting relationship built with clients is the foundation of our growth and of years-long cooperation based on trust.',
+      p3: "We know that an individual approach and a lasting relationship built with clients is the foundation of our growth and of years-long cooperation based on trust. We are not a single-brand dealership — we combine offers from dealers, banks and leasing companies, then help translate them into one concrete decision: which car, which installment, and which financing form actually fits how you use the car.",
       founderName: 'Wojciech',
       founderRole: 'Founder',
       goToContact: 'Get in touch with us',
+      stats: [
+        { value: '8 years', label: 'of experience on the market since 2018' },
+        { value: '1,500+', label: 'financed and negotiated cars' },
+        { value: '18', label: 'financing institutions and insurers' },
+        { value: '40+', label: 'car brands available' },
+      ],
+      howTitle: 'How we work',
+      howSubtitle: 'A simple path from the first conversation to picking up the car — no re-entering the same data in several places, no sales pressure.',
+      steps: [
+        {
+          title: 'We learn your situation',
+          description: 'We talk about how you actually use a car — for business, privately, seasonally or full-time — before proposing any variant.',
+        },
+        {
+          title: 'We compare offers for you',
+          description: 'We line up leasing, long-term rental and loan options from several dealers and institutions at once, so you do not have to call each of them yourself.',
+        },
+        {
+          title: 'We guide you to pickup',
+          description: 'The application, financing decision, documents, insurance and car pickup — the whole process is run by one dedicated advisor at Claro Motors.',
+        },
+      ],
+      whyTitle: 'Why Claro Motors?',
+      whySubtitle: 'We give you a comparison of offers, but we do not hide behind a table — you always discuss the key terms directly with an advisor before making a decision.',
+      reasons: [
+        {
+          title: 'Advisory instead of sales pressure',
+          description: 'We do not push a single form of financing. We show the differences between leasing, rental and a loan, and base the decision on your budget and how you use the car.',
+        },
+        {
+          title: 'One advisor from start to finish',
+          description: 'You are not passed to another person at every stage. The same advisor guides you from choosing the car, through paperwork, to pickup from the dealership.',
+        },
+        {
+          title: 'Offers from multiple sources at once',
+          description: 'We combine offers from dealers, banks and leasing companies to compare installments, availability and contract terms faster, without manually collecting quotes.',
+        },
+        {
+          title: 'Safer financial decisions',
+          description: 'We explain what actually affects your installment and what trade-offs a given contract carries — before you submit an application, not after you sign it.',
+        },
+      ],
     },
     contact: {
       title: 'Contact form',

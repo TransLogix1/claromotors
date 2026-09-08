@@ -48,7 +48,7 @@ export default function Hero() {
               {t.hero.ctaFleet}
               <ArrowRight size={18} />
             </button>
-            <button onClick={() => scrollTo('#kalkulator')} className="btn-secondary">
+            <button onClick={() => navigate('/kalkulator')} className="btn-secondary">
               {t.hero.ctaCalculator}
             </button>
           </div>

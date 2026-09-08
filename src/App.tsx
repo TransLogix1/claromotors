@@ -3,7 +3,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Oferta from '@/components/Oferta';
 import WhyClaro from '@/components/WhyClaro';
-import Calculator from '@/components/Calculator';
+import CalculatorTeaser from '@/components/CalculatorTeaser';
 import Fleet from '@/components/Fleet';
 import Testimonial from '@/components/Testimonial';
 import Blog from '@/components/Blog';
@@ -28,7 +28,7 @@ function HomePage() {
       <Hero />
       <Oferta />
       <WhyClaro />
-      <Calculator />
+      <CalculatorTeaser />
       <Fleet />
       <Testimonial />
       <Blog />

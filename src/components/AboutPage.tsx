@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Phone, Mail, ArrowRight } from 'lucide-react';
+import { Phone, Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import wojciechPhoto from '@/assets/wojciech.jpg';
 
@@ -14,9 +14,10 @@ export default function AboutPage() {
 
   return (
     <div className="pt-32 md:pt-36">
-      <section id="o-nas" className="section-padding bg-canvas">
+      {/* Intro + founder card */}
+      <section id="o-nas" className="section-padding pb-16 bg-canvas">
         <div className="max-w-8xl mx-auto px-6 lg:px-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-16">
             <div>
               <h1 className="text-3xl md:text-5xl text-white mb-6">
                 {t.about.title}
@@ -70,6 +71,56 @@ export default function AboutPage() {
                 <ArrowRight size={18} />
               </button>
             </div>
+          </div>
+
+          {/* Stats row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 border-t border-border pt-12">
+            {t.about.stats.map((stat) => (
+              <div key={stat.label}>
+                <p className="font-serif text-3xl md:text-4xl text-accent mb-2">{stat.value}</p>
+                <p className="text-sm text-text-muted font-light leading-snug">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Jak działamy */}
+      <section className="section-padding pt-0 pb-16">
+        <div className="max-w-8xl mx-auto px-6 lg:px-10">
+          <h2 className="text-2xl md:text-4xl text-white mb-3 max-w-2xl">{t.about.howTitle}</h2>
+          <p className="text-text-muted font-light max-w-2xl mb-12">{t.about.howSubtitle}</p>
+
+          <div className="grid sm:grid-cols-3 gap-8">
+            {t.about.steps.map((step, i) => (
+              <div key={step.title} className="hairline-row py-6">
+                <span className="font-serif text-2xl text-accent block mb-3">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="text-white mb-2">{step.title}</h3>
+                <p className="text-sm text-text-muted font-light leading-relaxed">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Dlaczego Claro Motors */}
+      <section className="section-padding pt-0">
+        <div className="max-w-8xl mx-auto px-6 lg:px-10">
+          <h2 className="text-2xl md:text-4xl text-white mb-3 max-w-2xl">{t.about.whyTitle}</h2>
+          <p className="text-text-muted font-light max-w-2xl mb-12">{t.about.whySubtitle}</p>
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            {t.about.reasons.map((reason) => (
+              <div key={reason.title} className="card p-6 md:p-8">
+                <div className="flex items-start gap-3 mb-2">
+                  <CheckCircle2 size={20} className="text-accent flex-shrink-0 mt-0.5" />
+                  <h3 className="text-white">{reason.title}</h3>
+                </div>
+                <p className="text-sm text-text-muted font-light leading-relaxed pl-8">{reason.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
