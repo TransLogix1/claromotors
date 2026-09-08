@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { X, Send, CheckCircle2 } from 'lucide-react';
 import { vehicles, type Vehicle } from '@/types';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { FORMSPREE_ENDPOINT } from '@/components/InquiryForm';
 
 const formatPLN = (value: number): string => {
   return new Intl.NumberFormat('pl-PL', {
@@ -16,6 +18,8 @@ export default function Fleet() {
   const [selectedCar, setSelectedCar] = useState<Vehicle | null>(null);
   const [form, setForm] = useState({ cena: '', name: '', phone: '', email: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
 
   const openModal = (vehicle: Vehicle) => {
     setSelectedCar(vehicle);
@@ -30,12 +34,27 @@ export default function Fleet() {
     document.body.style.overflow = '';
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      closeModal();
-    }, 2000);
+    if (!selectedCar) return;
+    setSending(true);
+    setError(false);
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(e.target as HTMLFormElement),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const [featured, ...rest] = vehicles;
@@ -55,7 +74,7 @@ export default function Fleet() {
 
         {/* Featured vehicle — large asymmetric showcase */}
         <div className="reveal grid lg:grid-cols-5 gap-6 mb-6">
-          <div className="lg:col-span-3 relative h-80 md:h-[30rem] overflow-hidden rounded group">
+          <Link to={`/flota/${featured.id}`} className="lg:col-span-3 relative h-80 md:h-[30rem] overflow-hidden rounded group block">
             <img
               src={featured.image}
               alt={featured.name}
@@ -66,7 +85,7 @@ export default function Fleet() {
               <p className="eyebrow mb-2">{t.hero.featuredBadge}</p>
               <h3 className="text-3xl md:text-5xl text-white">{featured.name}</h3>
             </div>
-          </div>
+          </Link>
           <div className="lg:col-span-2 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-border pt-6 lg:pt-0 lg:pl-8">
             <div className="grid grid-cols-3 gap-4 mb-8">
               <div>
@@ -100,15 +119,17 @@ export default function Fleet() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {rest.map((vehicle, index) => (
             <div key={vehicle.id} className="reveal group" style={{ transitionDelay: `${(index % 4) * 70}ms` }}>
-              <div className="relative h-48 overflow-hidden rounded mb-4">
+              <Link to={`/flota/${vehicle.id}`} className="relative h-48 overflow-hidden rounded mb-4 block">
                 <img
                   src={vehicle.image}
                   alt={vehicle.name}
                   className="w-full h-full object-cover img-grade transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-canvas/60 via-transparent to-transparent" />
-              </div>
-              <h3 className="text-lg text-white mb-1">{vehicle.name}</h3>
+              </Link>
+              <Link to={`/flota/${vehicle.id}`} className="block">
+                <h3 className="text-lg text-white mb-1 hover:text-accent transition-colors">{vehicle.name}</h3>
+              </Link>
               <p className="text-xs text-text-muted mb-3">{vehicle.power} · {vehicle.fuel}</p>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-sm text-text-muted">{t.fleet.basePrice}</span>
@@ -156,11 +177,14 @@ export default function Fleet() {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  <input type="hidden" name="_subject" value={`Negocjacja ceny — ${selectedCar.name}`} />
+                  <input type="hidden" name="car" value={selectedCar.name} />
                   <div>
                     <label className="block text-sm text-text-muted mb-2 font-medium">
                       {t.fleet.yourPrice}
                     </label>
                     <input
+                      name="proposed_price"
                       type="number"
                       required
                       value={form.cena}
@@ -174,6 +198,7 @@ export default function Fleet() {
                       {t.fleet.fullName}
                     </label>
                     <input
+                      name="name"
                       type="text"
                       required
                       value={form.name}
@@ -187,6 +212,7 @@ export default function Fleet() {
                       {t.fleet.phone}
                     </label>
                     <input
+                      name="phone"
                       type="tel"
                       required
                       value={form.phone}
@@ -200,6 +226,7 @@ export default function Fleet() {
                       {t.fleet.email}
                     </label>
                     <input
+                      name="email"
                       type="email"
                       required
                       value={form.email}
@@ -208,8 +235,11 @@ export default function Fleet() {
                       className="input-field"
                     />
                   </div>
-                  <button type="submit" className="btn-primary w-full mt-2">
-                    {t.fleet.sendProposal}
+                  {error && (
+                    <p className="text-sm text-red-400">{t.inquiryForm.errorBody}</p>
+                  )}
+                  <button type="submit" disabled={sending} className="btn-primary w-full mt-2">
+                    {sending ? '…' : t.fleet.sendProposal}
                     <Send size={16} />
                   </button>
                 </form>

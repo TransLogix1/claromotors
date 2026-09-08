@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, Phone } from 'lucide-react';
 import { services, serviceText } from '@/services';
+import InquiryForm from '@/components/InquiryForm';
 import { FileText, Car, ShoppingCart, ShieldCheck, Shield, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -15,7 +16,6 @@ const iconMap: Record<string, LucideIcon> = {
 
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
   const { t, lang } = useLanguage();
   const service = services.find((s) => s.slug === slug);
 
@@ -85,6 +85,12 @@ export default function ServiceDetail() {
                   </p>
                 </div>
               ))}
+
+              <div id="zapytanie">
+                <h2 className="text-xl md:text-2xl text-white mb-4">{t.inquiryForm.title}</h2>
+                <p className="text-text-muted mb-5 font-light">{t.inquiryForm.subtitle}</p>
+                <InquiryForm subject={`${serviceText(service.title, lang)} — zapytanie ze strony`} showBudgetField />
+              </div>
             </div>
 
             {/* Sidebar */}
@@ -130,8 +136,11 @@ export default function ServiceDetail() {
                     <span className="text-[11px] text-text-muted">{t.header.phoneLabel}</span>
                   </div>
                 </a>
-                <button onClick={() => navigate('/kontakt')} className="btn-secondary w-full">
-                  {t.nav.contact}
+                <button
+                  onClick={() => document.getElementById('zapytanie')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="btn-secondary w-full"
+                >
+                  {t.inquiryForm.title}
                 </button>
               </div>
 

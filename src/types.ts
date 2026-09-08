@@ -1,3 +1,15 @@
+// ---------------------------------------------------------------------------
+// ADDING A NEW CAR TO THE FLEET
+// Copy one of the objects in the `vehicles` array below and edit the fields.
+// Only `id`, `name`, `image`, `power`, `fuel`, `year` and `price` are
+// required — everything else (gallery, specs, description, colors) is
+// optional and simply will not render its section if left out.
+//
+//   id       — unique, lowercase, no spaces (used in the URL /flota/<id>)
+//   image    — main photo shown on the fleet grid and as the first gallery photo
+//   gallery  — extra photo URLs (exterior + interior); shown on the car's own page
+//   monthlyFrom — optional "rata od" price shown as a highlight badge
+// ---------------------------------------------------------------------------
 export interface Vehicle {
   id: string;
   name: string;
@@ -6,6 +18,16 @@ export interface Vehicle {
   fuel: string;
   year: string;
   price: number;
+  gallery?: string[];
+  monthlyFrom?: number;
+  bodyType?: string;
+  transmission?: string;
+  drivetrain?: string;
+  seats?: number;
+  doors?: number;
+  mileage?: string;
+  description?: string;
+  colors?: string[];
 }
 
 export interface CalculatorResult {
@@ -34,6 +56,15 @@ export const vehicles: Vehicle[] = [
     fuel: 'Benzyna V8 4.0T',
     year: '2024',
     price: 640000,
+    gallery: [/* client TODO: paste extra exterior/interior photo URLs here */],
+    monthlyFrom: 9800,
+    bodyType: 'Kombi',
+    transmission: 'Automatyczna',
+    drivetrain: 'Quattro (4x4)',
+    seats: 5,
+    doors: 5,
+    mileage: '0 km (nowy)',
+    description: 'Audi RS6 Avant łączy przestrzeń rodzinnego kombi z osiągami samochodu sportowego. Idealny wybór dla klienta firmowego, który potrzebuje dużego bagażnika bez kompromisu na codzienną dynamikę.',
   },
   {
     id: 'bmw-m5',
@@ -43,6 +74,15 @@ export const vehicles: Vehicle[] = [
     fuel: 'Benzyna V8 4.4T',
     year: '2024',
     price: 590000,
+    gallery: [/* client TODO: paste extra exterior/interior photo URLs here */],
+    monthlyFrom: 9200,
+    bodyType: 'Sedan',
+    transmission: 'Automatyczna',
+    drivetrain: 'xDrive (4x4)',
+    seats: 5,
+    doors: 4,
+    mileage: '0 km (nowy)',
+    description: 'BMW M5 Competition to flagowy sedan sportowy — połączenie luksusu klasy biznes z osiągami wyczynowymi. Dostępny w konfiguracji leasingowej i wynajmu długoterminowego.',
   },
   {
     id: 'porsche-911',
@@ -52,6 +92,15 @@ export const vehicles: Vehicle[] = [
     fuel: 'Benzyna B6 3.0T',
     year: '2024',
     price: 680000,
+    gallery: [/* client TODO: paste extra exterior/interior photo URLs here */],
+    monthlyFrom: 10500,
+    bodyType: 'Coupe',
+    transmission: 'Automatyczna (PDK)',
+    drivetrain: 'Tylny napęd',
+    seats: 4,
+    doors: 2,
+    mileage: '0 km (nowy)',
+    description: 'Porsche 911 Carrera S to ikona segmentu — auto, które można zamówić w dowolnej konfiguracji kolorystycznej i wyposażeniowej za pośrednictwem naszego doradcy.',
   },
   {
     id: 'mercedes-g63',
@@ -61,6 +110,15 @@ export const vehicles: Vehicle[] = [
     fuel: 'Benzyna V8 4.0T',
     year: '2024',
     price: 890000,
+    gallery: [/* client TODO: paste extra exterior/interior photo URLs here */],
+    monthlyFrom: 13900,
+    bodyType: 'SUV',
+    transmission: 'Automatyczna',
+    drivetrain: '4MATIC (4x4)',
+    seats: 5,
+    doors: 5,
+    mileage: '0 km (nowy)',
+    description: 'Mercedes-AMG G 63 — kultowa bryła terenówki z osiągami sportowego SUV-a. Wysoki popyt i ograniczona dostępność — rezerwacja przez naszego doradcę zdecydowanie przyspiesza termin odbioru.',
   },
   {
     id: 'alpine-a110',
@@ -70,6 +128,15 @@ export const vehicles: Vehicle[] = [
     fuel: 'Benzyna I4 1.8T',
     year: '2024',
     price: 310000,
+    gallery: [/* client TODO: paste extra exterior/interior photo URLs here */],
+    monthlyFrom: 5400,
+    bodyType: 'Coupe',
+    transmission: 'Automatyczna (DCT)',
+    drivetrain: 'Tylny napęd',
+    seats: 2,
+    doors: 2,
+    mileage: '0 km (nowy)',
+    description: 'Alpine A110 GT to lekki, precyzyjny sportowy coupe — świetna propozycja dla klienta, który szuka emocji za kierownicą bez kosztów utrzymania auta klasy super-sport.',
   },
 ];
 

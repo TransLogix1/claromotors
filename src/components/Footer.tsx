@@ -13,9 +13,9 @@ export default function Footer() {
     { label: t.nav.howItWorks, to: '/jak-to-dziala' },
     { label: t.nav.about, to: '/o-nas' },
     { label: t.nav.contact, to: '/kontakt' },
-    { label: t.nav.calculator, to: '/', hash: '#kalkulator' },
+    { label: t.nav.calculator, to: '/kalkulator' },
+    { label: t.nav.negotiate, to: '/negocjuj-cene' },
     { label: t.nav.fleet, to: '/', hash: '#flota' },
-    { label: t.nav.whyUs, to: '/', hash: '#dlaczego-my' },
     { label: t.nav.blog, to: '/', hash: '#baza-wiedzy' },
   ];
 

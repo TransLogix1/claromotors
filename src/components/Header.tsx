@@ -14,6 +14,7 @@ export default function Header() {
   const navLinks = [
     { label: t.nav.home, to: '/' },
     { label: t.nav.offer, to: '/oferta' },
+    { label: t.nav.calculator, to: '/kalkulator' },
     { label: t.nav.howItWorks, to: '/jak-to-dziala' },
     { label: t.nav.about, to: '/o-nas' },
     { label: t.nav.contact, to: '/kontakt' },

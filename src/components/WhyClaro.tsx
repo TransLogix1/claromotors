@@ -1,19 +1,21 @@
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Layers, Calculator as CalculatorIcon, Handshake } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 export default function WhyClaro() {
   const { t } = useLanguage();
 
-  const scrollTo = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  const cards = [
+    { icon: Layers, to: '/oferta', title: t.whyClaro.ctaRow.offerTitle, desc: t.whyClaro.ctaRow.offerDesc },
+    { icon: CalculatorIcon, to: '/kalkulator', title: t.whyClaro.ctaRow.calcTitle, desc: t.whyClaro.ctaRow.calcDesc },
+    { icon: Handshake, to: '/negocjuj-cene', title: t.whyClaro.ctaRow.negotiateTitle, desc: t.whyClaro.ctaRow.negotiateDesc },
+  ];
 
   return (
     <section id="dlaczego-my" className="section-padding bg-canvas">
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
         {/* SI, CLARO */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
           <div className="reveal">
             <h2 className="text-3xl md:text-5xl text-white mb-6">
               {t.whyClaro.title}
@@ -44,15 +46,15 @@ export default function WhyClaro() {
           </div>
         </div>
 
-        {/* Jak możemy pomóc */}
-        <div className="mb-20 reveal">
+        {/* Jak możemy pomóc — financing options */}
+        <div className="mb-16 reveal">
           <h3 className="text-2xl md:text-3xl text-white mb-3 max-w-2xl">
             {t.whyClaro.helpTitle}
           </h3>
           <p className="text-text-muted mb-8 font-light max-w-2xl">
             {t.whyClaro.helpSubtitle}
           </p>
-          <div className="flex flex-wrap gap-x-10 gap-y-4 mb-10 pb-10 border-b border-border">
+          <div className="flex flex-wrap gap-x-10 gap-y-4 pb-10 border-b border-border">
             {t.whyClaro.financingOptions.map((option) => (
               <div key={option} className="flex items-center gap-2.5">
                 <CheckCircle2 size={16} className="text-accent flex-shrink-0" />
@@ -60,61 +62,20 @@ export default function WhyClaro() {
               </div>
             ))}
           </div>
-          <button onClick={() => scrollTo('#kalkulator')} className="btn-primary">
-            {t.whyClaro.checkOffer}
-            <ArrowRight size={18} />
-          </button>
         </div>
 
-        {/* Najlepsza oferta samochodu */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
-          <div>
-            <h3 className="text-2xl md:text-3xl text-white mb-5">
-              {t.whyClaro.bestOfferTitle}
-            </h3>
-            <p className="text-text-muted leading-relaxed mb-5 font-light">
-              {t.whyClaro.bestOfferP1}
-            </p>
-            <p className="text-text-muted leading-relaxed font-light">
-              {t.whyClaro.guaranteeParagraph}
-            </p>
-          </div>
-          <div className="card p-8 md:p-10">
-            <p className="text-text-light leading-relaxed">
-              {t.whyClaro.bestOfferCard}
-            </p>
-          </div>
-        </div>
-
-        {/* Atrakcyjne finansowanie */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
-          <div className="card p-8 md:p-10">
-            <h3 className="text-2xl md:text-3xl text-white mb-5">
-              {t.whyClaro.financingTitle}
-            </h3>
-            <p className="text-text-muted leading-relaxed mb-6 font-light">
-              {t.whyClaro.financingP1}
-            </p>
-            <p className="text-text-light leading-relaxed">
-              {t.whyClaro.financingCard}
-            </p>
-          </div>
-          <div>
-            <div className="card p-8 md:p-10 mb-6">
-              <p className="font-serif text-xl md:text-2xl text-white italic leading-relaxed">
-                „{t.whyClaro.quote}”
-              </p>
-            </div>
-            <div className="card p-8 md:p-10">
-              <h3 className="text-xl text-white mb-4">{t.whyClaro.insuranceTitle}</h3>
-              <p className="text-text-muted leading-relaxed mb-5 font-light">
-                {t.whyClaro.insuranceP1}
-              </p>
-              <p className="text-text-muted leading-relaxed font-light">
-                {t.whyClaro.insuranceP2}
-              </p>
-            </div>
-          </div>
+        {/* Compact CTA row: full offer / calculator / negotiate */}
+        <div className="grid sm:grid-cols-3 gap-6 mb-16">
+          {cards.map((card) => (
+            <Link key={card.to} to={card.to} className="card p-6 md:p-8 group hover:border-accent/50 transition-colors">
+              <card.icon size={24} className="text-accent mb-4" />
+              <h3 className="text-white mb-2 flex items-center gap-2">
+                {card.title}
+                <ArrowRight size={16} className="text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </h3>
+              <p className="text-sm text-text-muted font-light leading-relaxed">{card.desc}</p>
+            </Link>
+          ))}
         </div>
 
         {/* Usługi dodatkowe */}

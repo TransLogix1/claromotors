@@ -13,6 +13,9 @@ import ServiceDetail from '@/components/ServiceDetail';
 import Process from '@/components/Process';
 import AboutPage from '@/components/AboutPage';
 import ContactPage from '@/components/ContactPage';
+import KalkulatorPage from '@/components/KalkulatorPage';
+import NegocjujPage from '@/components/NegocjujPage';
+import VehicleDetail from '@/components/VehicleDetail';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -45,6 +48,9 @@ function App() {
           <Route path="/jak-to-dziala" element={<Process standalonePage />} />
           <Route path="/o-nas" element={<AboutPage />} />
           <Route path="/kontakt" element={<ContactPage />} />
+          <Route path="/kalkulator" element={<KalkulatorPage />} />
+          <Route path="/negocjuj-cene" element={<NegocjujPage />} />
+          <Route path="/flota/:id" element={<VehicleDetail />} />
         </Routes>
       </main>
       <Footer />

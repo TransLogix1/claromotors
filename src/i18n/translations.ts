@@ -3,7 +3,7 @@ export type Lang = 'pl' | 'en';
 export interface TranslationShape {
   nav: {
     home: string; offer: string; howItWorks: string; about: string; contact: string;
-    calculator: string; fleet: string; whyUs: string; blog: string;
+    calculator: string; fleet: string; whyUs: string; blog: string; negotiate: string;
   };
   header: { phoneLabel: string };
   hero: {
@@ -19,6 +19,7 @@ export interface TranslationShape {
     bestOfferCard: string; financingTitle: string; financingP1: string; financingCard: string;
     quote: string; insuranceTitle: string; insuranceP1: string; insuranceP2: string;
     extraServicesTitle: string; extraServices: string[];
+    ctaRow: { offerTitle: string; offerDesc: string; calcTitle: string; calcDesc: string; negotiateTitle: string; negotiateDesc: string };
   };
   calculator: {
     title: string; subtitle: string; priceLabel: string; periodLabel: string; months: string;
@@ -47,6 +48,24 @@ export interface TranslationShape {
     sentBody: string; calculatorMessage: (rata: string, wplata: string, wykup: string) => string;
   };
   testimonial: { quote: string; author: string };
+  inquiryForm: {
+    title: string; subtitle: string; fullName: string; phone: string; email: string;
+    carInterest: string; carInterestPlaceholder: string; budget: string; budgetPlaceholder: string;
+    message: string; messagePlaceholder: string; consent: string; send: string;
+    sentTitle: string; sentBody: string; errorBody: string;
+  };
+  kalkulatorPage: {
+    heroTitle: string; heroSubtitle: string; howTitle: string;
+    steps: { title: string; description: string }[];
+    tableTitle: string; tableRows: { param: string; installment: string; payment: string }[];
+    noteTitle: string; noteBody: string; faqTitle: string;
+    faq: { q: string; a: string }[];
+  };
+  negocjujPage: {
+    title: string; subtitle: string; howTitle: string; howBody: string;
+    points: string[];
+  };
+  wynajemLeasingCta: { title: string; body: string; button: string };
   footer: { tagline: string; navTitle: string; contactTitle: string; privacy: string; rights: string; regTagline: string };
   common: { langSwitch: string };
 }
@@ -63,6 +82,7 @@ export const translations: Record<Lang, TranslationShape> = {
       fleet: 'Flota Pojazdów',
       whyUs: 'Dlaczego My',
       blog: 'Baza Wiedzy',
+      negotiate: 'Negocjuj cenę',
     },
     header: {
       phoneLabel: 'Wojciech — Bezpośredni kontakt',
@@ -127,6 +147,14 @@ export const translations: Record<Lang, TranslationShape> = {
       insuranceP2: 'Szukasz ubezpieczenia komunikacyjnego, firmowego, grupowego czy na życie? Jesteś w dobrych rękach.',
       extraServicesTitle: 'Zapytaj naszego doradcę o usługi dodatkowe:',
       extraServices: ['Sprzedaż obecnego samochodu', 'Cesja leasingu/wynajmu', 'Detailing'],
+      ctaRow: {
+        offerTitle: 'Zobacz pełną ofertę',
+        offerDesc: 'Leasing, wynajem długoterminowy, zakup, ubezpieczenie i GAP — szczegóły każdej formy.',
+        calcTitle: 'Policz ratę',
+        calcDesc: 'Ustaw cenę, wpłatę i okres — zobacz orientacyjną ratę w kilka sekund.',
+        negotiateTitle: 'Negocjuj cenę',
+        negotiateDesc: 'Masz na oku konkretny model? Powiedz nam swój budżet, a wynegocjujemy warunki.',
+      },
     },
     calculator: {
       title: 'Kalkulator Leasingowy',
@@ -250,6 +278,66 @@ export const translations: Record<Lang, TranslationShape> = {
       quote: 'Polecam z czystym sumieniem. Profesjonalne podejście do klienta, wyśmienity kontakt i obsługa od A-Z na najwyższym poziomie. Brawo!',
       author: 'Łukasz Knap',
     },
+    inquiryForm: {
+      title: 'Wyślij zapytanie',
+      subtitle: 'Wypełnij krótki formularz — Wojciech oddzwoni z konkretną propozycją, zwykle w ciągu 1 dnia roboczego.',
+      fullName: 'Imię i nazwisko',
+      phone: 'Telefon',
+      email: 'Email',
+      carInterest: 'Interesujący Cię model (opcjonalnie)',
+      carInterestPlaceholder: 'np. BMW X5, Audi A6, dowolna marka',
+      budget: 'Orientacyjny budżet miesięczny',
+      budgetPlaceholder: 'np. 2 500 zł netto / mies.',
+      message: 'Wiadomość',
+      messagePlaceholder: 'Opisz swoje potrzeby — resztą zajmie się nasz doradca.',
+      consent: 'Wyrażam zgodę na przetwarzanie moich danych osobowych przez Claro Motors w celu odpowiedzi na zapytanie, zgodnie z RODO.',
+      send: 'Wyślij zapytanie',
+      sentTitle: 'Zapytanie wysłane',
+      sentBody: 'Dziękujemy — Wojciech skontaktuje się z Tobą wkrótce.',
+      errorBody: 'Coś poszło nie tak. Zadzwoń bezpośrednio: 517 195 097.',
+    },
+    kalkulatorPage: {
+      heroTitle: 'Kalkulator rat',
+      heroSubtitle: 'Ustaw cenę auta, wpłatę własną, okres i wykup — zobacz orientacyjną ratę netto, zanim porozmawiasz z doradcą. Wynik nie jest ofertą wiążącą, ale dobrym punktem wyjścia do rozmowy o finansowaniu.',
+      howTitle: 'Jak czytać wynik',
+      steps: [
+        { title: 'Cena pojazdu', description: 'Wpisz wartość auta, którym jesteś zainteresowany — nowego lub używanego, z dowolnego salonu.' },
+        { title: 'Wpłata własna', description: 'Im wyższa wpłata na starcie, tym niższa rata miesięczna — ale więcej płacisz przy podpisaniu umowy.' },
+        { title: 'Okres finansowania', description: 'Dłuższy okres rozkłada koszt na więcej rat, ale zwykle podnosi całkowity koszt finansowania.' },
+        { title: 'Wykup końcowy', description: 'Wyższy wykup obniża ratę miesięczną, bo więcej wartości auta zostaje do spłaty na końcu umowy.' },
+      ],
+      tableTitle: 'Jak parametry wpływają na ratę',
+      tableRows: [
+        { param: 'Wyższa wpłata własna', installment: 'Zwykle niższa', payment: 'Więcej płacisz na starcie umowy' },
+        { param: 'Dłuższy okres', installment: 'Zwykle niższa', payment: 'Płatności rozłożone na więcej miesięcy' },
+        { param: 'Wyższy wykup', installment: 'Zwykle niższa', payment: 'Więcej płacisz przy wykupie na końcu' },
+      ],
+      noteTitle: 'To orientacyjne wyliczenie',
+      noteBody: 'Kalkulator pokazuje szacunkową ratę na podstawie wpisanych parametrów. Finalna oferta zależy od konkretnego modelu, oceny wniosku i aktualnych warunków finansujących — dlatego każdą kalkulację potwierdzamy indywidualnie z doradcą, zanim cokolwiek podpiszesz.',
+      faqTitle: 'Najczęstsze pytania',
+      faq: [
+        { q: 'Czy wynik kalkulatora to gotowa oferta?', a: 'Nie. To orientacyjne wyliczenie, które pomaga zaplanować budżet. Ostateczne warunki ustalamy indywidualnie po rozmowie z doradcą.' },
+        { q: 'Czy mogę przeliczyć ratę dla auta używanego?', a: 'Tak, kalkulator działa dla nowych i używanych samochodów — wystarczy wpisać cenę pojazdu.' },
+        { q: 'Czy podanie danych kontaktowych jest wymagane, żeby zobaczyć ratę?', a: 'Nie — kalkulator liczy w czasie rzeczywistym bez podawania danych. Formularz kontaktowy wysyłasz dopiero, gdy chcesz otrzymać konkretną ofertę.' },
+      ],
+    },
+    negocjujPage: {
+      title: 'Negocjuj cenę',
+      subtitle: 'Masz na oku konkretny model — u nas, w salonie albo w innym ogłoszeniu? Powiedz nam, jaką cenę chciałbyś osiągnąć, a nasz zespół podejmie negocjacje z dealerem lub instytucją finansującą w Twoim imieniu.',
+      howTitle: 'Jak to działa',
+      howBody: 'Wysyłasz model auta i swój budżet. W ciągu 24 godzin wracamy z realną oceną, czy i jak blisko tej ceny możemy się zbliżyć — bez zobowiązań z Twojej strony.',
+      points: [
+        'Negocjacje prowadzi doświadczony doradca, nie Ty',
+        'Porównujemy oferty kilku dealerów i finansujących jednocześnie',
+        'Odpowiedź zwykle w ciągu 24 godzin',
+        'Zero kosztów wstępnych — płacisz dopiero za finalną umowę',
+      ],
+    },
+    wynajemLeasingCta: {
+      title: 'Nie widzisz odpowiedzi na swoje pytanie?',
+      body: 'Napisz bezpośrednio do naszego doradcy — odpowiemy z konkretną propozycją dopasowaną do Twojej sytuacji.',
+      button: 'Wyślij zapytanie',
+    },
     footer: {
       tagline: 'Doradztwo motoryzacyjne i finansowanie pojazdów premium. Od 2018 roku.',
       navTitle: 'Nawigacja',
@@ -273,6 +361,7 @@ export const translations: Record<Lang, TranslationShape> = {
       fleet: 'Fleet',
       whyUs: 'Why Us',
       blog: 'Knowledge Base',
+      negotiate: 'Negotiate price',
     },
     header: {
       phoneLabel: 'Wojciech — Direct contact',
@@ -337,6 +426,14 @@ export const translations: Record<Lang, TranslationShape> = {
       insuranceP2: 'Looking for motor, business, group, or life insurance? You are in good hands.',
       extraServicesTitle: 'Ask our advisor about additional services:',
       extraServices: ['Selling your current car', 'Lease/rental assignment', 'Detailing'],
+      ctaRow: {
+        offerTitle: 'See the full offer',
+        offerDesc: 'Leasing, long-term rental, purchase, insurance and GAP — details for every form.',
+        calcTitle: 'Calculate the installment',
+        calcDesc: 'Set the price, down payment and period — see an approximate installment in seconds.',
+        negotiateTitle: 'Negotiate a price',
+        negotiateDesc: 'Have a specific model in mind? Tell us your budget and we will negotiate the terms.',
+      },
     },
     calculator: {
       title: 'Leasing Calculator',
@@ -459,6 +556,66 @@ export const translations: Record<Lang, TranslationShape> = {
     testimonial: {
       quote: 'I recommend them with a clear conscience. A professional approach to the client, excellent contact, and service from A to Z at the highest level. Well done!',
       author: 'Łukasz Knap',
+    },
+    inquiryForm: {
+      title: 'Send an inquiry',
+      subtitle: "Fill out a short form — Wojciech will call back with a concrete proposal, usually within 1 business day.",
+      fullName: 'Full name',
+      phone: 'Phone',
+      email: 'Email',
+      carInterest: 'Model you are interested in (optional)',
+      carInterestPlaceholder: 'e.g. BMW X5, Audi A6, any make',
+      budget: 'Approximate monthly budget',
+      budgetPlaceholder: 'e.g. 2,500 PLN net / month',
+      message: 'Message',
+      messagePlaceholder: 'Describe what you need — our advisor will take care of the rest.',
+      consent: 'I consent to Claro Motors processing my personal data in order to respond to my inquiry, in accordance with GDPR.',
+      send: 'Send inquiry',
+      sentTitle: 'Inquiry sent',
+      sentBody: 'Thank you — Wojciech will contact you shortly.',
+      errorBody: 'Something went wrong. Please call us directly: 517 195 097.',
+    },
+    kalkulatorPage: {
+      heroTitle: 'Installment calculator',
+      heroSubtitle: "Set the car's price, down payment, period and buyout to see an approximate net installment before speaking with an advisor. The result is not a binding offer, but a good starting point for a financing conversation.",
+      howTitle: 'How to read the result',
+      steps: [
+        { title: 'Vehicle price', description: 'Enter the value of the car you are interested in — new or used, from any dealership.' },
+        { title: 'Down payment', description: 'A higher upfront payment usually lowers the monthly installment, but increases what you pay at signing.' },
+        { title: 'Financing period', description: 'A longer period spreads the cost over more installments, but usually raises the total cost of financing.' },
+        { title: 'Final buyout', description: 'A higher buyout lowers the monthly installment, since more of the car\'s value remains to be paid at the end.' },
+      ],
+      tableTitle: 'How parameters affect the installment',
+      tableRows: [
+        { param: 'Higher down payment', installment: 'Usually lower', payment: 'You pay more at signing' },
+        { param: 'Longer period', installment: 'Usually lower', payment: 'Payments spread over more months' },
+        { param: 'Higher buyout', installment: 'Usually lower', payment: 'You pay more at the final buyout' },
+      ],
+      noteTitle: 'This is an approximate calculation',
+      noteBody: 'The calculator shows an estimated installment based on the entered parameters. The final offer depends on the specific model, application assessment, and current financing terms — so we confirm every calculation individually with an advisor before you sign anything.',
+      faqTitle: 'Frequently asked questions',
+      faq: [
+        { q: 'Is the calculator result a ready offer?', a: 'No. It is an approximate calculation that helps you plan your budget. Final terms are set individually after speaking with an advisor.' },
+        { q: 'Can I calculate the installment for a used car?', a: 'Yes, the calculator works for both new and used cars — just enter the vehicle price.' },
+        { q: 'Do I need to provide contact details to see the installment?', a: 'No — the calculator computes in real time without any contact details. You only submit the contact form once you want a concrete offer.' },
+      ],
+    },
+    negocjujPage: {
+      title: 'Negotiate a price',
+      subtitle: 'Have a specific model in mind — with us, at a dealership, or in another listing? Tell us the price you would like to achieve, and our team will negotiate with the dealer or financing institution on your behalf.',
+      howTitle: 'How it works',
+      howBody: 'Send us the car model and your budget. Within 24 hours we come back with a realistic assessment of whether — and how close to that price — we can get, with no obligation on your part.',
+      points: [
+        'An experienced advisor handles the negotiation, not you',
+        'We compare offers from several dealers and financing partners at once',
+        'A reply usually within 24 hours',
+        'Zero upfront cost — you only pay once the final agreement is signed',
+      ],
+    },
+    wynajemLeasingCta: {
+      title: "Don't see the answer to your question?",
+      body: 'Write directly to our advisor — we will reply with a concrete proposal tailored to your situation.',
+      button: 'Send an inquiry',
     },
     footer: {
       tagline: 'Automotive advisory and premium vehicle financing. Since 2018.',

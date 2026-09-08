@@ -16,10 +16,14 @@ const formatPercent = (value: number): string => {
   return value.toFixed(2).replace('.', ',') + '%';
 };
 
-export default function Calculator() {
+interface CalculatorProps {
+  initialPrice?: number;
+}
+
+export default function Calculator({ initialPrice }: CalculatorProps = {}) {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const [cenaNetto, setCenaNetto] = useState<number>(250000);
+  const [cenaNetto, setCenaNetto] = useState<number>(initialPrice ?? 250000);
   const [okres, setOkres] = useState<number>(36);
   const [wplataProcent, setWplataProcent] = useState<number>(10);
   const [wykupProcent, setWykupProcent] = useState<number>(25);
