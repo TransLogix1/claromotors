@@ -1,5 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { Tag, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const formatPLN = (value: number): string => {
   if (!isFinite(value) || value <= 0) return '0,00 PLN';
@@ -14,11 +16,9 @@ const formatPercent = (value: number): string => {
   return value.toFixed(2).replace('.', ',') + '%';
 };
 
-interface CalculatorProps {
-  onApplyConditions: (rata: number, wplata: number, wykup: number) => void;
-}
-
-export default function Calculator({ onApplyConditions }: CalculatorProps) {
+export default function Calculator() {
+  const { t } = useLanguage();
+  const navigate = useNavigate();
   const [cenaNetto, setCenaNetto] = useState<number>(250000);
   const [okres, setOkres] = useState<number>(36);
   const [wplataProcent, setWplataProcent] = useState<number>(10);
@@ -39,7 +39,6 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
     const kapitalDoLeasingu = cenaNetto - wplataPLN;
     const n = okres;
 
-    // Annuity with discounted residual value
     const pvWykup = wykupPLN / Math.pow(1 + miesiecznaStopa, n);
     const kapitalDoSplaty = kapitalDoLeasingu - pvWykup;
 
@@ -58,38 +57,33 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
 
   const handleKodRabatowy = useCallback((value: string) => {
     setKodRabatowy(value);
-    if (value.trim().toUpperCase() === 'RABAT3010') {
-      setRabatActive(true);
-    } else {
-      setRabatActive(false);
-    }
+    setRabatActive(value.trim().toUpperCase() === 'RABAT3010');
   }, []);
 
   const handleApply = () => {
-    onApplyConditions(result.rata, result.wplata, result.wykup);
-    const el = document.querySelector('#o-nas');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    navigate('/kontakt', {
+      state: { rata: result.rata, wplata: result.wplata, wykup: result.wykup },
+    });
   };
 
   return (
     <section id="kalkulator" className="section-padding bg-canvas">
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
-        <div className="mb-14 md:mb-20">
+        <div className="mb-14 md:mb-20 reveal">
           <h2 className="text-3xl md:text-5xl text-white mb-4">
-            Kalkulator Leasingowy
+            {t.calculator.title}
           </h2>
           <p className="text-text-muted text-lg max-w-2xl font-light">
-            Przelicz ratę netto w czasie rzeczywistym. Zmień cenę, wpłatę własną i wykup końcowy — algorytm annuitetowy z dyskontowaną wartością rezydualną przelicza się natychmiast.
+            {t.calculator.subtitle}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Left: Controls */}
           <div className="card p-6 md:p-10 space-y-8">
-            {/* Cena netto */}
             <div>
               <label className="block text-sm text-text-muted mb-3 font-medium">
-                Cena netto pojazdu (PLN)
+                {t.calculator.priceLabel}
               </label>
               <input
                 type="number"
@@ -100,10 +94,9 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
               />
             </div>
 
-            {/* Okres leasingu */}
             <div>
               <label className="block text-sm text-text-muted mb-3 font-medium">
-                Okres leasingu
+                {t.calculator.periodLabel}
               </label>
               <div className="flex gap-2">
                 {[24, 36, 48, 60].map((m) => (
@@ -112,17 +105,16 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
                     className={`seg-btn ${okres === m ? 'active' : ''}`}
                     onClick={() => setOkres(m)}
                   >
-                    {m} mies.
+                    {m} {t.calculator.months}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Wpłata własna */}
             <div>
               <div className="flex items-center justify-between mb-3">
                 <label className="text-sm text-text-muted font-medium">
-                  Wpłata własna
+                  {t.calculator.downPaymentLabel}
                 </label>
                 <span className="text-sm text-white font-semibold tabular-nums">
                   {wplataProcent}% — {formatPLN(wplataPLN)}
@@ -142,11 +134,10 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
               </div>
             </div>
 
-            {/* Wykup końcowy */}
             <div>
               <div className="flex items-center justify-between mb-3">
                 <label className="text-sm text-text-muted font-medium">
-                  Wykup końcowy
+                  {t.calculator.buyoutLabel}
                 </label>
                 <span className="text-sm text-white font-semibold tabular-nums">
                   {wykupProcent}% — {formatPLN(wykupPLN)}
@@ -166,10 +157,9 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
               </div>
             </div>
 
-            {/* Kod rabatowy */}
             <div>
               <label className="block text-sm text-text-muted mb-3 font-medium">
-                Kod rabatowy
+                {t.calculator.promoLabel}
               </label>
               <div className="relative">
                 <Tag size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
@@ -177,55 +167,53 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
                   type="text"
                   value={kodRabatowy}
                   onChange={(e) => handleKodRabatowy(e.target.value)}
-                  placeholder="Wpisz kod promocyjny"
+                  placeholder={t.calculator.promoPlaceholder}
                   className="input-field pl-10"
                 />
               </div>
               {rabatActive && (
                 <div className="flex items-center gap-2 mt-3 text-sm text-white">
-                  <CheckCircle2 size={16} className="text-white" />
-                  Kod RABAT3010 aktywował obniżoną marżę leasingu!
+                  <CheckCircle2 size={16} className="text-accent" />
+                  {t.calculator.promoActive}
                 </div>
               )}
             </div>
           </div>
 
           {/* Right: Summary */}
-          <div className="card p-6 md:p-10 flex flex-col">
+          <div className="card card-interactive p-6 md:p-10 flex flex-col">
             <h3 className="text-lg text-text-muted font-medium mb-8">
-              Podsumowanie wariantu
+              {t.calculator.summaryTitle}
             </h3>
 
-            {/* Main rate */}
             <div className="mb-8 pb-8 border-b border-border">
-              <p className="text-sm text-text-muted mb-2">Miesięczna rata netto</p>
+              <p className="text-sm text-text-muted mb-2">{t.calculator.monthlyRate}</p>
               <p className="font-serif text-5xl md:text-6xl text-white tracking-tight tabular-nums">
                 {formatPLN(result.rata)}
               </p>
             </div>
 
-            {/* Details */}
             <div className="space-y-5 mb-8">
               <div className="flex items-center justify-between">
-                <span className="text-text-muted text-sm">Wpłata własna</span>
+                <span className="text-text-muted text-sm">{t.calculator.downPayment}</span>
                 <span className="text-white text-base font-medium tabular-nums">
                   {formatPLN(result.wplata)}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-text-muted text-sm">Wykup końcowy</span>
+                <span className="text-text-muted text-sm">{t.calculator.buyout}</span>
                 <span className="text-white text-base font-medium tabular-nums">
                   {formatPLN(result.wykup)}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-text-muted text-sm">Całkowita suma opłat</span>
+                <span className="text-text-muted text-sm">{t.calculator.totalPercent}</span>
                 <span className="text-white text-base font-medium tabular-nums">
                   {formatPercent(result.sumaProcent)}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-text-muted text-sm">Suma opłat w PLN</span>
+                <span className="text-text-muted text-sm">{t.calculator.totalPln}</span>
                 <span className="text-white text-base font-medium tabular-nums">
                   {formatPLN(result.sumaPln)}
                 </span>
@@ -234,11 +222,11 @@ export default function Calculator({ onApplyConditions }: CalculatorProps) {
 
             <div className="mt-auto">
               <button onClick={handleApply} className="btn-primary w-full">
-                Złóż wniosek o te warunki
+                {t.calculator.applyButton}
                 <ArrowRight size={18} />
               </button>
               <p className="text-xs text-text-muted text-center mt-4">
-                Kliknięcie przeniesie wyliczone wartości do formularza kontaktowego
+                {t.calculator.applyHint}
               </p>
             </div>
           </div>

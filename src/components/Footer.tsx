@@ -1,19 +1,23 @@
-import { Phone, Mail, FileText } from 'lucide-react';
+import { Phone, Mail, FileText, Facebook, Instagram } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-
-const footerNav = [
-  { label: 'Oferta', to: '/oferta' },
-  { label: 'Kalkulator', to: '/', hash: '#kalkulator' },
-  { label: 'Flota Pojazdów', to: '/', hash: '#flota' },
-  { label: 'Dlaczego My', to: '/', hash: '#dlaczego-my' },
-  { label: 'Proces', to: '/', hash: '#proces' },
-  { label: 'Baza Wiedzy', to: '/', hash: '#baza-wiedzy' },
-  { label: 'O nas', to: '/', hash: '#o-nas' },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
+import logo from '@/assets/claromotors-logo.png';
 
 export default function Footer() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const footerNav = [
+    { label: t.nav.offer, to: '/oferta' },
+    { label: t.nav.howItWorks, to: '/jak-to-dziala' },
+    { label: t.nav.about, to: '/o-nas' },
+    { label: t.nav.contact, to: '/kontakt' },
+    { label: t.nav.calculator, to: '/', hash: '#kalkulator' },
+    { label: t.nav.fleet, to: '/', hash: '#flota' },
+    { label: t.nav.whyUs, to: '/', hash: '#dlaczego-my' },
+    { label: t.nav.blog, to: '/', hash: '#baza-wiedzy' },
+  ];
 
   const handleClick = (to: string, hash?: string) => {
     if (to === '/' && hash) {
@@ -29,6 +33,7 @@ export default function Footer() {
       }
     } else {
       navigate(to);
+      window.scrollTo({ top: 0 });
     }
   };
 
@@ -38,23 +43,43 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-10 md:gap-8 mb-12">
           {/* Logo + Copyright */}
           <div>
-            <Link to="/" className="font-serif text-2xl font-bold tracking-[0.2em] text-white mb-4 inline-block">
-              CLARO MOTORS
+            <Link to="/" className="inline-block mb-4">
+              <img src={logo} alt="Claro Motors" className="h-6 w-auto object-contain" />
             </Link>
-            <p className="text-sm text-text-muted leading-relaxed max-w-xs">
-              Doradztwo motoryzacyjne i finansowanie pojazdów premium. Od 2018 roku.
+            <p className="text-sm text-text-muted leading-relaxed max-w-xs mb-4">
+              {t.footer.tagline}
             </p>
+            <div className="flex gap-3">
+              <a
+                href="https://www.facebook.com/claromotors/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 flex items-center justify-center bg-input border border-border rounded hover:border-accent transition-colors group"
+              >
+                <Facebook size={15} className="text-text-muted group-hover:text-accent transition-colors" />
+              </a>
+              <a
+                href="https://www.instagram.com/claromotors/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 flex items-center justify-center bg-input border border-border rounded hover:border-accent transition-colors group"
+              >
+                <Instagram size={15} className="text-text-muted group-hover:text-accent transition-colors" />
+              </a>
+            </div>
           </div>
 
           {/* Nav */}
           <div>
-            <p className="text-sm text-white font-medium mb-4">Nawigacja</p>
+            <p className="text-sm text-white font-medium mb-4">{t.footer.navTitle}</p>
             <nav className="grid grid-cols-2 gap-y-2.5 gap-x-4">
               {footerNav.map((link) => (
                 <button
                   key={link.label}
                   onClick={() => handleClick(link.to, link.hash)}
-                  className="text-sm text-text-muted hover:text-white transition-colors text-left"
+                  className="text-sm text-text-muted hover:text-accent transition-colors text-left"
                 >
                   {link.label}
                 </button>
@@ -64,19 +89,19 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="text-sm text-white font-medium mb-4">Kontakt</p>
+            <p className="text-sm text-white font-medium mb-4">{t.footer.contactTitle}</p>
             <div className="space-y-3">
-              <a href="tel:517195097" className="flex items-center gap-2.5 text-sm text-text-muted hover:text-white transition-colors">
+              <a href="tel:517195097" className="flex items-center gap-2.5 text-sm text-text-muted hover:text-accent transition-colors">
                 <Phone size={15} />
                 517 195 097
               </a>
-              <a href="mailto:biuro@claromotors.pl" className="flex items-center gap-2.5 text-sm text-text-muted hover:text-white transition-colors">
+              <a href="mailto:biuro@claromotors.pl" className="flex items-center gap-2.5 text-sm text-text-muted hover:text-accent transition-colors">
                 <Mail size={15} />
                 biuro@claromotors.pl
               </a>
-              <a href="#" className="flex items-center gap-2.5 text-sm text-text-muted hover:text-white transition-colors">
+              <a href="#" className="flex items-center gap-2.5 text-sm text-text-muted hover:text-accent transition-colors">
                 <FileText size={15} />
-                Polityka prywatności
+                {t.footer.privacy}
               </a>
             </div>
           </div>
@@ -84,10 +109,10 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-xs text-text-muted">
-            © 2024 Claro Motors. Wszelkie prawa zastrzeżone.
+            © {new Date().getFullYear()} Claro Motors. {t.footer.rights}
           </p>
           <p className="text-xs text-text-muted">
-            Claro Motors — doradztwo motoryzacyjne. NIP: 000-000-00-00. REGON: 000000000.
+            {t.footer.regTagline} NIP: 000-000-00-00. REGON: 000000000.
           </p>
         </div>
       </div>

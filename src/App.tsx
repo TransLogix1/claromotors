@@ -1,4 +1,3 @@
-import { useState, useRef } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -6,39 +5,30 @@ import Oferta from '@/components/Oferta';
 import WhyClaro from '@/components/WhyClaro';
 import Calculator from '@/components/Calculator';
 import Fleet from '@/components/Fleet';
-import Process from '@/components/Process';
+import Testimonial from '@/components/Testimonial';
 import Blog from '@/components/Blog';
-import About from '@/components/About';
 import Footer from '@/components/Footer';
 import OfertaPage from '@/components/OfertaPage';
 import ServiceDetail from '@/components/ServiceDetail';
+import Process from '@/components/Process';
+import AboutPage from '@/components/AboutPage';
+import ContactPage from '@/components/ContactPage';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 function HomePage() {
-  const [calculatorData, setCalculatorData] = useState<{
-    rata: number;
-    wplata: number;
-    wykup: number;
-  } | null>(null);
-
-  const contactRef = useRef<HTMLDivElement>(null);
-
-  useScrollReveal([]);
-
-  const handleApplyConditions = (rata: number, wplata: number, wykup: number) => {
-    setCalculatorData({ rata, wplata, wykup });
-  };
+  const { lang } = useLanguage();
+  useScrollReveal([lang]);
 
   return (
     <>
       <Hero />
       <Oferta />
       <WhyClaro />
-      <Calculator onApplyConditions={handleApplyConditions} />
+      <Calculator />
       <Fleet />
-      <Process />
+      <Testimonial />
       <Blog />
-      <About contactRef={contactRef} calculatorData={calculatorData} />
     </>
   );
 }
@@ -52,6 +42,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/oferta" element={<OfertaPage />} />
           <Route path="/oferta/:slug" element={<ServiceDetail />} />
+          <Route path="/jak-to-dziala" element={<Process standalonePage />} />
+          <Route path="/o-nas" element={<AboutPage />} />
+          <Route path="/kontakt" element={<ContactPage />} />
         </Routes>
       </main>
       <Footer />

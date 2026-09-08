@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, Send, CheckCircle2, Gauge, Fuel, Calendar } from 'lucide-react';
 import { vehicles, type Vehicle } from '@/types';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const formatPLN = (value: number): string => {
   return new Intl.NumberFormat('pl-PL', {
@@ -10,6 +11,7 @@ const formatPLN = (value: number): string => {
 };
 
 export default function Fleet() {
+  const { t } = useLanguage();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<Vehicle | null>(null);
   const [form, setForm] = useState({ cena: '', name: '', phone: '', email: '' });
@@ -41,10 +43,10 @@ export default function Fleet() {
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
         <div className="mb-14 md:mb-20 reveal">
           <h2 className="text-3xl md:text-5xl text-white mb-4">
-            Flota Pojazdów
+            {t.fleet.title}
           </h2>
           <p className="text-text-muted text-lg max-w-2xl font-light">
-            Modele dostępne w bieżącej ofercie. Każde auto pochodzi z polskiego salonu z pełną gwarancją producenta. Kliknij „Negocjuj cenę”, aby wysłać propozycję bezpośrednio do Wojciecha.
+            {t.fleet.subtitle}
           </p>
         </div>
 
@@ -55,7 +57,6 @@ export default function Fleet() {
               className="card card-interactive reveal overflow-hidden flex flex-col group"
               style={{ transitionDelay: `${(index % 3) * 80}ms` }}
             >
-              {/* Image */}
               <div className="relative h-52 bg-input overflow-hidden">
                 <img
                   src={vehicle.image}
@@ -68,34 +69,33 @@ export default function Fleet() {
                 </div>
               </div>
 
-              {/* Specs */}
               <div className="p-5 flex flex-col flex-1">
                 <div className="grid grid-cols-3 gap-3 mb-5">
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1.5 text-text-muted">
                       <Gauge size={14} />
-                      <span className="text-xs">Moc</span>
+                      <span className="text-xs">{t.fleet.power}</span>
                     </div>
                     <span className="text-sm text-white font-medium">{vehicle.power}</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1.5 text-text-muted">
                       <Fuel size={14} />
-                      <span className="text-xs">Paliwo</span>
+                      <span className="text-xs">{t.fleet.fuel}</span>
                     </div>
                     <span className="text-sm text-white font-medium">{vehicle.fuel}</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1.5 text-text-muted">
                       <Calendar size={14} />
-                      <span className="text-xs">Rok</span>
+                      <span className="text-xs">{t.fleet.year}</span>
                     </div>
                     <span className="text-sm text-white font-medium">{vehicle.year}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-4 border-t border-border mb-5">
-                  <span className="text-sm text-text-muted">Cena wyjściowa netto</span>
+                  <span className="text-sm text-text-muted">{t.fleet.basePrice}</span>
                   <span className="text-lg text-accent font-semibold tabular-nums">
                     {formatPLN(vehicle.price)}
                   </span>
@@ -105,7 +105,7 @@ export default function Fleet() {
                   onClick={() => openModal(vehicle)}
                   className="btn-secondary w-full mt-auto"
                 >
-                  Negocjuj cenę
+                  {t.fleet.negotiate}
                 </button>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function Fleet() {
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-text-muted hover:text-white transition-colors"
-              aria-label="Zamknij"
+              aria-label="Close"
             >
               <X size={22} />
             </button>
@@ -135,19 +135,19 @@ export default function Fleet() {
             {!submitted ? (
               <>
                 <h3 className="text-2xl text-white mb-1.5">
-                  Propozycja cenowa dla:
+                  {t.fleet.modalTitle}
                 </h3>
                 <p className="text-lg text-text-muted mb-6 font-medium">
                   {selectedCar.name}
                 </p>
                 <p className="text-sm text-text-muted mb-6">
-                  Cena wyjściowa: <span className="text-white font-medium">{formatPLN(selectedCar.price)}</span> netto
+                  {t.fleet.modalBasePrice} <span className="text-white font-medium">{formatPLN(selectedCar.price)}</span>
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm text-text-muted mb-2 font-medium">
-                      Twoja proponowana cena netto (PLN)
+                      {t.fleet.yourPrice}
                     </label>
                     <input
                       type="number"
@@ -160,7 +160,7 @@ export default function Fleet() {
                   </div>
                   <div>
                     <label className="block text-sm text-text-muted mb-2 font-medium">
-                      Imię i nazwisko
+                      {t.fleet.fullName}
                     </label>
                     <input
                       type="text"
@@ -173,7 +173,7 @@ export default function Fleet() {
                   </div>
                   <div>
                     <label className="block text-sm text-text-muted mb-2 font-medium">
-                      Numer telefonu kontaktowego
+                      {t.fleet.phone}
                     </label>
                     <input
                       type="tel"
@@ -186,7 +186,7 @@ export default function Fleet() {
                   </div>
                   <div>
                     <label className="block text-sm text-text-muted mb-2 font-medium">
-                      Adres e-mail
+                      {t.fleet.email}
                     </label>
                     <input
                       type="email"
@@ -198,17 +198,17 @@ export default function Fleet() {
                     />
                   </div>
                   <button type="submit" className="btn-primary w-full mt-2">
-                    Wyślij propozycję cenową do Wojciecha
+                    {t.fleet.sendProposal}
                     <Send size={16} />
                   </button>
                 </form>
               </>
             ) : (
               <div className="text-center py-12">
-                <CheckCircle2 size={56} className="text-white mx-auto mb-4" />
-                <h3 className="text-2xl text-white mb-2">Propozycja wysłana</h3>
+                <CheckCircle2 size={56} className="text-accent mx-auto mb-4" />
+                <h3 className="text-2xl text-white mb-2">{t.fleet.sentTitle}</h3>
                 <p className="text-text-muted">
-                  Wojciech skontaktuje się z Tobą w ciągu 24 godzin z odpowiedzią.
+                  {t.fleet.sentBody}
                 </p>
               </div>
             )}

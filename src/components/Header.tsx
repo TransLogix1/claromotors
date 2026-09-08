@@ -1,22 +1,23 @@
 import { useState, useEffect } from 'react';
-import { Phone, Menu, X } from 'lucide-react';
+import { Phone, Menu, X, Globe } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-const navLinks = [
-  { label: 'Oferta', to: '/oferta' },
-  { label: 'Kalkulator', to: '/', hash: '#kalkulator' },
-  { label: 'Flota Pojazdów', to: '/', hash: '#flota' },
-  { label: 'Dlaczego My', to: '/', hash: '#dlaczego-my' },
-  { label: 'Proces', to: '/', hash: '#proces' },
-  { label: 'Baza Wiedzy', to: '/', hash: '#baza-wiedzy' },
-  { label: 'O nas', to: '/', hash: '#o-nas' },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
+import logo from '@/assets/claromotors-logo.png';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { t, toggleLang } = useLanguage();
+
+  const navLinks = [
+    { label: t.nav.home, to: '/' },
+    { label: t.nav.offer, to: '/oferta' },
+    { label: t.nav.howItWorks, to: '/jak-to-dziala' },
+    { label: t.nav.about, to: '/o-nas' },
+    { label: t.nav.contact, to: '/kontakt' },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -24,24 +25,13 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleNavClick = (to: string, hash?: string) => {
+  const handleNavClick = (to: string) => {
     setMobileOpen(false);
-
-    if (to === '/' && hash) {
-      if (location.pathname !== '/') {
-        navigate('/');
-        setTimeout(() => {
-          const el = document.querySelector(hash);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      } else {
-        const el = document.querySelector(hash);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      navigate(to);
-    }
+    navigate(to);
+    window.scrollTo({ top: 0 });
   };
+
+  const isActive = (to: string) => location.pathname === to;
 
   return (
     <header
@@ -57,9 +47,10 @@ export default function Header() {
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
-            className="font-serif text-2xl font-bold tracking-[0.2em] text-white whitespace-nowrap group"
+            className="flex-shrink-0"
+            aria-label="Claro Motors"
           >
-            CLARO<span className="text-accent transition-colors group-hover:text-accent-hover"> MOTORS</span>
+            <img src={logo} alt="Claro Motors" className="h-6 md:h-7 w-auto object-contain" />
           </Link>
 
           {/* Desktop Nav */}
@@ -67,16 +58,26 @@ export default function Header() {
             {navLinks.map((link) => (
               <button
                 key={link.label}
-                onClick={() => handleNavClick(link.to, link.hash)}
-                className="text-sm font-normal text-text-muted hover:text-accent transition-colors duration-200"
+                onClick={() => handleNavClick(link.to)}
+                className={`text-sm font-normal transition-colors duration-200 ${
+                  isActive(link.to) ? 'text-accent' : 'text-text-muted hover:text-accent'
+                }`}
               >
                 {link.label}
               </button>
             ))}
           </nav>
 
-          {/* Direct Contact CTA */}
+          {/* Right side: language toggle + phone */}
           <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={toggleLang}
+              aria-label="Toggle language"
+              className="flex items-center gap-2 px-3 py-2.5 bg-btn-secondary border border-border rounded hover:border-accent transition-all duration-200 text-sm font-medium text-white"
+            >
+              <Globe size={16} className="text-accent" />
+              {t.common.langSwitch}
+            </button>
             <a
               href="tel:517195097"
               className="flex items-center gap-3 px-4 py-2.5 bg-btn-secondary border border-border rounded hover:border-accent hover:bg-border transition-all duration-200"
@@ -84,19 +85,29 @@ export default function Header() {
               <Phone size={18} className="text-accent" />
               <div className="flex flex-col leading-tight">
                 <span className="text-sm font-semibold text-white tracking-wide">517 195 097</span>
-                <span className="text-[11px] text-text-muted">Wojciech — Bezpośredni kontakt</span>
+                <span className="text-[11px] text-text-muted">{t.header.phoneLabel}</span>
               </div>
             </a>
           </div>
 
-          {/* Mobile Toggle */}
-          <button
-            className="xl:hidden text-white p-2"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Menu"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile: language toggle + menu button */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              onClick={toggleLang}
+              aria-label="Toggle language"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 bg-btn-secondary border border-border rounded text-xs font-medium text-white"
+            >
+              <Globe size={14} className="text-accent" />
+              {t.common.langSwitch}
+            </button>
+            <button
+              className="text-white p-2"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -106,8 +117,10 @@ export default function Header() {
           {navLinks.map((link) => (
             <button
               key={link.label}
-              onClick={() => handleNavClick(link.to, link.hash)}
-              className="block text-base text-text-muted hover:text-accent transition-colors text-left w-full"
+              onClick={() => handleNavClick(link.to)}
+              className={`block text-base transition-colors text-left w-full ${
+                isActive(link.to) ? 'text-accent' : 'text-text-muted hover:text-accent'
+              }`}
             >
               {link.label}
             </button>
@@ -116,10 +129,10 @@ export default function Header() {
             href="tel:517195097"
             className="flex items-center gap-3 pt-4 border-t border-border"
           >
-            <Phone size={18} className="text-white" />
+            <Phone size={18} className="text-accent" />
             <div className="flex flex-col leading-tight">
               <span className="text-sm font-semibold text-white">517 195 097</span>
-              <span className="text-[11px] text-text-muted">Wojciech — Bezpośredni kontakt</span>
+              <span className="text-[11px] text-text-muted">{t.header.phoneLabel}</span>
             </div>
           </a>
         </nav>

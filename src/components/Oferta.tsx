@@ -1,6 +1,7 @@
 import { ArrowRight, FileText, Car, ShoppingCart, ShieldCheck, Shield, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { services } from '@/services';
+import { services, serviceText } from '@/services';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const iconMap: Record<string, LucideIcon> = {
   FileText,
@@ -11,13 +12,15 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export default function Oferta() {
+  const { t, lang } = useLanguage();
+
   return (
     <section id="oferta" className="section-padding">
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
         <div className="mb-14 md:mb-20 reveal">
-          <h2 className="text-3xl md:text-5xl text-white mb-4">Oferta</h2>
+          <h2 className="text-3xl md:text-5xl text-white mb-4">{t.offerHome.title}</h2>
           <p className="text-text-muted text-lg max-w-2xl font-light">
-            Pięć obszarów, w których Claro Motors wspiera Cię na drodze do nowego samochodu. Kliknij dowolny, aby poznać szczegóły.
+            {t.offerHome.subtitle}
           </p>
         </div>
 
@@ -35,13 +38,13 @@ export default function Oferta() {
                   <Icon size={24} className="text-accent" />
                 </div>
                 <h3 className="text-xl text-white mb-3 leading-snug">
-                  {service.title}
+                  {serviceText(service.title, lang)}
                 </h3>
                 <p className="text-sm text-text-muted leading-relaxed font-light flex-1">
-                  {service.excerpt}
+                  {serviceText(service.excerpt, lang)}
                 </p>
                 <div className="flex items-center gap-2 mt-6 text-sm text-white group-hover:text-accent transition-colors">
-                  Sprawdź szczegóły
+                  {t.offerHome.checkDetails}
                   <ArrowRight size={16} className="group-hover:translate-x-1 group-hover:text-accent transition-all" />
                 </div>
               </Link>
