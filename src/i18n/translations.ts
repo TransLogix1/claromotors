@@ -37,7 +37,7 @@ export interface TranslationShape {
     steps: { number: string; title: string; description: string }[];
     stepOf: (n: number, total: number) => string;
   };
-  blog: { title: string; subtitle: string; readArticle: string };
+  blog: { title: string; subtitle: string; readArticle: string; related: string };
   offerHome: { title: string; subtitle: string; checkDetails: string };
   offerPage: { title: string; subtitle: string; readMore: string };
   serviceDetail: { back: string; contactCta: string };
@@ -241,6 +241,7 @@ export const translations: Record<Lang, TranslationShape> = {
       subtitle:
         'Artykuły eksperckie o leasingu, ubezpieczeniach i optymalizacji podatkowej przy autach premium. Pisanie treści opieramy na przepisach i liczbach, nie na hasłach marketingowych.',
       readArticle: 'Czytaj artykuł',
+      related: 'Powiązane artykuły',
     },
     offerHome: {
       title: 'Oferta',
@@ -562,6 +563,7 @@ export const translations: Record<Lang, TranslationShape> = {
       subtitle:
         'Expert articles on leasing, insurance, and tax optimisation for premium cars. We base our content on regulations and figures, not marketing slogans.',
       readArticle: 'Read article',
+      related: 'Related articles',
     },
     offerHome: {
       title: 'Offer',

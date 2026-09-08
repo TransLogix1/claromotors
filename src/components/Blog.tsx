@@ -1,27 +1,39 @@
+import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, Tag } from 'lucide-react';
 import { blogArticles } from '@/types';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 export default function Blog() {
   const { t } = useLanguage();
+  const latest = blogArticles.slice(0, 3);
 
   return (
     <section id="baza-wiedzy" className="section-padding">
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
-        <div className="mb-14 md:mb-20 reveal">
-          <h2 className="text-3xl md:text-5xl text-white mb-4">
-            {t.blog.title}
-          </h2>
-          <p className="text-text-muted text-lg max-w-2xl font-light">
-            {t.blog.subtitle}
-          </p>
+        <div className="mb-14 md:mb-16 reveal flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <h2 className="text-3xl md:text-5xl text-white mb-4">
+              {t.blog.title}
+            </h2>
+            <p className="text-text-muted text-lg max-w-2xl font-light">
+              {t.blog.subtitle}
+            </p>
+          </div>
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-sm text-white hover:text-accent transition-colors flex-shrink-0"
+          >
+            {t.nav.blog}
+            <ArrowRight size={16} />
+          </Link>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {blogArticles.map((article, index) => (
-            <article
+          {latest.map((article, index) => (
+            <Link
               key={article.id}
-              className="card card-interactive reveal p-6 md:p-8 flex flex-col group cursor-pointer"
+              to={`/blog/${article.id}`}
+              className="card card-interactive reveal p-6 md:p-8 flex flex-col group"
               style={{ transitionDelay: `${(index % 3) * 80}ms` }}
             >
               <div className="flex items-center gap-3 mb-4">
@@ -44,7 +56,7 @@ export default function Blog() {
                 {t.blog.readArticle}
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>

@@ -16,7 +16,7 @@ export default function Footer() {
     { label: t.nav.calculator, to: '/kalkulator' },
     { label: t.nav.negotiate, to: '/negocjuj-cene' },
     { label: t.nav.fleet, to: '/', hash: '#flota' },
-    { label: t.nav.blog, to: '/', hash: '#baza-wiedzy' },
+    { label: t.nav.blog, to: '/blog' },
   ];
 
   const handleClick = (to: string, hash?: string) => {

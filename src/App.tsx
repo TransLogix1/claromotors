@@ -16,6 +16,8 @@ import ContactPage from '@/components/ContactPage';
 import KalkulatorPage from '@/components/KalkulatorPage';
 import NegocjujPage from '@/components/NegocjujPage';
 import VehicleDetail from '@/components/VehicleDetail';
+import BlogPage from '@/components/BlogPage';
+import BlogArticlePage from '@/components/BlogArticlePage';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -51,6 +53,8 @@ function App() {
           <Route path="/kalkulator" element={<KalkulatorPage />} />
           <Route path="/negocjuj-cene" element={<NegocjujPage />} />
           <Route path="/flota/:id" element={<VehicleDetail />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogArticlePage />} />
         </Routes>
       </main>
       <Footer />
