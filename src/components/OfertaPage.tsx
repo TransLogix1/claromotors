@@ -1,16 +1,8 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, Car, ShoppingCart, ShieldCheck, Shield, type LucideIcon } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { services, serviceText } from '@/services';
 import { useLanguage } from '@/i18n/LanguageContext';
-
-const iconMap: Record<string, LucideIcon> = {
-  FileText,
-  Car,
-  ShoppingCart,
-  ShieldCheck,
-  Shield,
-};
 
 export default function OfertaPage() {
   const { t, lang } = useLanguage();
@@ -20,48 +12,41 @@ export default function OfertaPage() {
   }, []);
 
   return (
-    <div className="pt-20">
-      <section className="section-padding">
+    <div className="pt-32 md:pt-36">
+      <section className="section-padding pt-0 md:pt-0">
         <div className="max-w-8xl mx-auto px-6 lg:px-10">
-          <div className="mb-14 md:mb-20">
-            <h1 className="text-3xl md:text-5xl text-white mb-4">{t.offerPage.title}</h1>
-            <p className="text-text-muted text-lg max-w-2xl font-light">
+          <div className="mb-14 md:mb-20 max-w-2xl">
+            <p className="eyebrow mb-4">{t.offerPage.title}</p>
+            <h1 className="text-4xl md:text-6xl text-white mb-5">{t.offerPage.title}</h1>
+            <p className="text-text-muted text-lg font-light">
               {t.offerPage.subtitle}
             </p>
           </div>
 
-          <div className="space-y-6">
-            {services.map((service, idx) => {
-              const Icon = iconMap[service.icon] ?? FileText;
-              return (
-                <Link
-                  key={service.slug}
-                  to={`/oferta/${service.slug}`}
-                  className="card p-8 md:p-10 flex flex-col md:flex-row items-start gap-6 group hover:border-accent/40 transition-colors"
-                >
-                  <div className="w-14 h-14 flex items-center justify-center bg-accent-muted border border-accent/30 rounded flex-shrink-0">
-                    <Icon size={28} className="text-accent" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="font-serif text-2xl text-border font-bold">
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
-                      <h2 className="text-xl md:text-2xl text-white">
-                        {serviceText(service.title, lang)}
-                      </h2>
-                    </div>
-                    <p className="text-text-muted leading-relaxed font-light">
-                      {serviceText(service.excerpt, lang)}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-white group-hover:text-accent flex-shrink-0 mt-2 md:mt-0 transition-colors">
-                    {t.offerPage.readMore}
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              );
-            })}
+          <div>
+            {services.map((service, idx) => (
+              <Link
+                key={service.slug}
+                to={`/oferta/${service.slug}`}
+                className="hairline-row group flex flex-col md:flex-row md:items-center gap-3 md:gap-8 py-8 md:py-10 px-2 md:px-4"
+              >
+                <span className="font-serif text-3xl md:text-5xl text-border font-bold w-20 flex-shrink-0 group-hover:text-accent/50 transition-colors">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <div className="flex-1">
+                  <h2 className="text-xl md:text-3xl text-white mb-2">
+                    {serviceText(service.title, lang)}
+                  </h2>
+                  <p className="text-text-muted leading-relaxed font-light max-w-2xl">
+                    {serviceText(service.excerpt, lang)}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-white group-hover:text-accent flex-shrink-0 transition-colors">
+                  {t.offerPage.readMore}
+                  <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

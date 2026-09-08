@@ -45,20 +45,17 @@ export default function WhyClaro() {
         </div>
 
         {/* Jak możemy pomóc */}
-        <div className="card p-8 md:p-12 mb-20">
-          <h3 className="text-2xl md:text-3xl text-white mb-3">
+        <div className="mb-20 reveal">
+          <h3 className="text-2xl md:text-3xl text-white mb-3 max-w-2xl">
             {t.whyClaro.helpTitle}
           </h3>
-          <p className="text-text-muted mb-8 font-light">
+          <p className="text-text-muted mb-8 font-light max-w-2xl">
             {t.whyClaro.helpSubtitle}
           </p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="flex flex-wrap gap-x-10 gap-y-4 mb-10 pb-10 border-b border-border">
             {t.whyClaro.financingOptions.map((option) => (
-              <div
-                key={option}
-                className="flex items-center gap-3 bg-input border border-border rounded p-4"
-              >
-                <CheckCircle2 size={18} className="text-accent flex-shrink-0" />
+              <div key={option} className="flex items-center gap-2.5">
+                <CheckCircle2 size={16} className="text-accent flex-shrink-0" />
                 <span className="text-sm text-text-light">{option}</span>
               </div>
             ))}
@@ -121,18 +118,18 @@ export default function WhyClaro() {
         </div>
 
         {/* Usługi dodatkowe */}
-        <div className="card p-8 md:p-12">
-          <h3 className="text-xl text-white mb-2">{t.whyClaro.extraServicesTitle}</h3>
-          <div className="flex flex-wrap gap-3 mt-6">
-            {t.whyClaro.extraServices.map((item) => (
-              <span
-                key={item}
-                className="text-sm text-text-light border border-border rounded px-4 py-2 bg-input"
-              >
+        <div className="reveal border-t border-border pt-10">
+          <h3 className="text-xl text-white mb-4">{t.whyClaro.extraServicesTitle}</h3>
+          <p className="text-text-light font-light">
+            {t.whyClaro.extraServices.map((item, i) => (
+              <span key={item}>
                 {item}
+                {i < t.whyClaro.extraServices.length - 1 && (
+                  <span className="text-accent mx-3">·</span>
+                )}
               </span>
             ))}
-          </div>
+          </p>
         </div>
       </div>
     </section>

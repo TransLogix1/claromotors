@@ -123,9 +123,39 @@
 
   @media (min-width: 768px) {
     .section-padding {
-      padding-top: 6.5rem;
-      padding-bottom: 6.5rem;
+      padding-top: 8rem;
+      padding-bottom: 8rem;
     }
+  }
+
+  /* Unified photo grading — makes photography from mixed sources read as one
+     consistent, deliberate art direction instead of assorted stock images. */
+  .img-grade {
+    filter: grayscale(0.15) contrast(1.08) brightness(0.94) saturate(0.92);
+  }
+
+  /* Editorial eyebrow label */
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #C9A469;
+    font-weight: 500;
+  }
+
+  /* Hairline divider row, used instead of bordered "cards" for editorial lists */
+  .hairline-row {
+    border-top: 1px solid #2B2F35;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .hairline-row:hover {
+    border-color: rgba(201, 164, 105, 0.4);
+    background-color: rgba(201, 164, 105, 0.03);
+  }
+
+  .hairline-row:last-child {
+    border-bottom: 1px solid #2B2F35;
   }
 }
 

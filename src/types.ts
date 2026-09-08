@@ -29,7 +29,7 @@ export const vehicles: Vehicle[] = [
   {
     id: 'audi-rs6',
     name: 'Audi RS6 Avant',
-    image: 'https://images.pexels.com/photos/7727196/pexels-photo-7727196.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    image: 'https://images.pexels.com/photos/7727196/pexels-photo-7727196.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
     power: '600 KM',
     fuel: 'Benzyna V8 4.0T',
     year: '2024',
@@ -38,7 +38,7 @@ export const vehicles: Vehicle[] = [
   {
     id: 'bmw-m5',
     name: 'BMW M5 Competition',
-    image: 'https://images.pexels.com/photos/17888840/pexels-photo-17888840.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    image: 'https://images.pexels.com/photos/17888840/pexels-photo-17888840.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
     power: '625 KM',
     fuel: 'Benzyna V8 4.4T',
     year: '2024',
@@ -47,7 +47,7 @@ export const vehicles: Vehicle[] = [
   {
     id: 'porsche-911',
     name: 'Porsche 911 Carrera S',
-    image: 'https://images.pexels.com/photos/38160273/pexels-photo-38160273.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    image: 'https://images.pexels.com/photos/38160273/pexels-photo-38160273.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
     power: '450 KM',
     fuel: 'Benzyna B6 3.0T',
     year: '2024',
@@ -56,7 +56,7 @@ export const vehicles: Vehicle[] = [
   {
     id: 'mercedes-g63',
     name: 'Mercedes-AMG G 63',
-    image: 'https://images.pexels.com/photos/36782669/pexels-photo-36782669.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    image: 'https://images.pexels.com/photos/36782669/pexels-photo-36782669.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
     power: '585 KM',
     fuel: 'Benzyna V8 4.0T',
     year: '2024',
@@ -65,7 +65,7 @@ export const vehicles: Vehicle[] = [
   {
     id: 'alpine-a110',
     name: 'Alpine A110 GT',
-    image: 'https://images.pexels.com/photos/20895340/pexels-photo-20895340.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    image: 'https://images.pexels.com/photos/20895340/pexels-photo-20895340.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
     power: '300 KM',
     fuel: 'Benzyna I4 1.8T',
     year: '2024',

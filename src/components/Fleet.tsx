@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Send, CheckCircle2, Gauge, Fuel, Calendar } from 'lucide-react';
+import { X, Send, CheckCircle2 } from 'lucide-react';
 import { vehicles, type Vehicle } from '@/types';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -38,76 +38,87 @@ export default function Fleet() {
     }, 2000);
   };
 
+  const [featured, ...rest] = vehicles;
+
   return (
     <section id="flota" className="section-padding">
       <div className="max-w-8xl mx-auto px-6 lg:px-10">
-        <div className="mb-14 md:mb-20 reveal">
-          <h2 className="text-3xl md:text-5xl text-white mb-4">
-            {t.fleet.title}
-          </h2>
-          <p className="text-text-muted text-lg max-w-2xl font-light">
+        <div className="mb-14 md:mb-16 reveal grid md:grid-cols-2 gap-6 items-end">
+          <div>
+            <p className="eyebrow mb-4">{t.fleet.title}</p>
+            <h2 className="text-3xl md:text-5xl text-white">{t.fleet.title}</h2>
+          </div>
+          <p className="text-text-muted text-lg font-light md:text-right md:ml-auto md:max-w-md">
             {t.fleet.subtitle}
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vehicles.map((vehicle, index) => (
-            <div
-              key={vehicle.id}
-              className="card card-interactive reveal overflow-hidden flex flex-col group"
-              style={{ transitionDelay: `${(index % 3) * 80}ms` }}
-            >
-              <div className="relative h-52 bg-input overflow-hidden">
+        {/* Featured vehicle — large asymmetric showcase */}
+        <div className="reveal grid lg:grid-cols-5 gap-6 mb-6">
+          <div className="lg:col-span-3 relative h-80 md:h-[30rem] overflow-hidden rounded group">
+            <img
+              src={featured.image}
+              alt={featured.name}
+              className="w-full h-full object-cover img-grade transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+              <p className="eyebrow mb-2">{t.hero.featuredBadge}</p>
+              <h3 className="text-3xl md:text-5xl text-white">{featured.name}</h3>
+            </div>
+          </div>
+          <div className="lg:col-span-2 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-border pt-6 lg:pt-0 lg:pl-8">
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              <div>
+                <p className="text-xs text-text-muted mb-1.5">{t.fleet.power}</p>
+                <p className="text-white font-medium">{featured.power}</p>
+              </div>
+              <div>
+                <p className="text-xs text-text-muted mb-1.5">{t.fleet.fuel}</p>
+                <p className="text-white font-medium">{featured.fuel}</p>
+              </div>
+              <div>
+                <p className="text-xs text-text-muted mb-1.5">{t.fleet.year}</p>
+                <p className="text-white font-medium">{featured.year}</p>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between pt-6 border-t border-border mb-6">
+                <span className="text-sm text-text-muted">{t.fleet.basePrice}</span>
+                <span className="text-2xl text-accent font-serif font-semibold tabular-nums">
+                  {formatPLN(featured.price)}
+                </span>
+              </div>
+              <button onClick={() => openModal(featured)} className="btn-primary w-full">
+                {t.fleet.negotiate}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Rest of the fleet — tighter grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {rest.map((vehicle, index) => (
+            <div key={vehicle.id} className="reveal group" style={{ transitionDelay: `${(index % 4) * 70}ms` }}>
+              <div className="relative h-48 overflow-hidden rounded mb-4">
                 <img
                   src={vehicle.image}
                   alt={vehicle.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover img-grade transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-container/90 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="text-xl text-white">{vehicle.name}</h3>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-canvas/60 via-transparent to-transparent" />
               </div>
-
-              <div className="p-5 flex flex-col flex-1">
-                <div className="grid grid-cols-3 gap-3 mb-5">
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-1.5 text-text-muted">
-                      <Gauge size={14} />
-                      <span className="text-xs">{t.fleet.power}</span>
-                    </div>
-                    <span className="text-sm text-white font-medium">{vehicle.power}</span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-1.5 text-text-muted">
-                      <Fuel size={14} />
-                      <span className="text-xs">{t.fleet.fuel}</span>
-                    </div>
-                    <span className="text-sm text-white font-medium">{vehicle.fuel}</span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-1.5 text-text-muted">
-                      <Calendar size={14} />
-                      <span className="text-xs">{t.fleet.year}</span>
-                    </div>
-                    <span className="text-sm text-white font-medium">{vehicle.year}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-4 border-t border-border mb-5">
-                  <span className="text-sm text-text-muted">{t.fleet.basePrice}</span>
-                  <span className="text-lg text-accent font-semibold tabular-nums">
-                    {formatPLN(vehicle.price)}
-                  </span>
-                </div>
-
-                <button
-                  onClick={() => openModal(vehicle)}
-                  className="btn-secondary w-full mt-auto"
-                >
-                  {t.fleet.negotiate}
-                </button>
+              <h3 className="text-lg text-white mb-1">{vehicle.name}</h3>
+              <p className="text-xs text-text-muted mb-3">{vehicle.power} · {vehicle.fuel}</p>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm text-text-muted">{t.fleet.basePrice}</span>
+                <span className="text-base text-accent font-semibold tabular-nums">
+                  {formatPLN(vehicle.price)}
+                </span>
               </div>
+              <button onClick={() => openModal(vehicle)} className="btn-secondary w-full">
+                {t.fleet.negotiate}
+              </button>
             </div>
           ))}
         </div>
