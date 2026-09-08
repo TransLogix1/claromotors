@@ -17,6 +17,7 @@ export default function Header() {
     { label: t.nav.calculator, to: '/kalkulator' },
     { label: t.nav.howItWorks, to: '/jak-to-dziala' },
     { label: t.nav.about, to: '/o-nas' },
+    { label: t.nav.blog, to: '/blog' },
     { label: t.nav.contact, to: '/kontakt' },
   ];
 
@@ -32,7 +33,8 @@ export default function Header() {
     window.scrollTo({ top: 0 });
   };
 
-  const isActive = (to: string) => location.pathname === to;
+  const isActive = (to: string) =>
+    to === '/' ? location.pathname === '/' : location.pathname === to || location.pathname.startsWith(to + '/');
 
   return (
     <header
